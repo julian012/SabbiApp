@@ -1,6 +1,7 @@
 {
   "name": "Sabbi",
-  "integrations": {},
-  "type": "angular",
-  "id": "b2cf30b8"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
 }
