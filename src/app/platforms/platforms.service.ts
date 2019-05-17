@@ -12,6 +12,6 @@ export class PlatformsService {
   constructor(private http : HttpClient) {}
 
   public getDataPlatforms(): Observable<PlatformModel[]>{
-    return this.http.get<PlatformModel[]>(HTTP_URL+'/platform/1');
+    return this.http.get<PlatformModel[]>(HTTP_URL+'/platforms');
   }
 }

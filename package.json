@@ -29,6 +29,7 @@
     "cordova-plugin-advanced-http": "2.0.9",
     "cordova-plugin-file": "6.0.1",
     "core-js": "^2.5.4",
+    "ionic-text-avatar": "^1.1.0",
     "rxjs": "~6.5.1",
     "rxjs-observable": "0.0.7",
     "tslib": "^1.9.0",

@@ -32,4 +32,12 @@ export class PlatformsPage implements OnInit {
     );
   }
 
+  public isToggled(value: string): boolean{
+    if(value == 'A'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

@@ -15,7 +15,7 @@
     <ion-card-header>
       <ion-card-title>Plataforma</ion-card-title>
     </ion-card-header>
-    <ion-img src="/assets/img/platform.png"></ion-img>
+    <ion-img src="/assets/img/platform.jpeg"></ion-img>
     <ion-card-content>
       <p>
         En esta parte podras agregar, modificar y desactivar las plataformas en las cuales publicas tus productos.
@@ -29,8 +29,10 @@
   </ion-fab>
   <ion-list>
     <ion-item *ngFor="let platform of dataPlatform">
-      <ion-label>{{platform.name_platform}}</ion-label>
+      <ion-label color="dark">{{platform.name_platform}}</ion-label>
+      <ion-toggle [(ngModel)]="isToggled(platform.status_platform)" slot="end"></ion-toggle>
     </ion-item>
+
   </ion-list>
 
 </ion-content>
