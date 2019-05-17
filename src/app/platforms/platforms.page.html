@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Menu plataforma
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="welcome-card">
+
+    <ion-card-header>
+      <ion-card-title>Plataforma</ion-card-title>
+    </ion-card-header>
+    <ion-img src="/assets/img/platform.png"></ion-img>
+    <ion-card-content>
+      <p>
+        En esta parte podras agregar, modificar y desactivar las plataformas en las cuales publicas tus productos.
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="md-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <ion-item *ngFor="let platform of dataPlatform">
+      <ion-label>{{platform.name_platform}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
