@@ -42,7 +42,7 @@ export class AppComponent {
       icon: 'md-stats'
     },{
       title: 'Plataformas',
-      url: '/list',
+      url: '/platforms',
       icon: 'md-basket'
     },{
       title: 'Configuración',

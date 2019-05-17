@@ -14,6 +14,9 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
+  },
+  { path: 'platforms', 
+    loadChildren: './platforms/platforms.module#PlatformsPageModule' 
   }
 ];
 
