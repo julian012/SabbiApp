@@ -24,13 +24,17 @@
   </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="md-add"></ion-icon>
+      <ion-icon name="md-add" (click)="showPrompt()" ></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-list>
     <ion-item *ngFor="let platform of dataPlatform">
+      <ion-avatar slot="start">
+        <ion-img [src]="generatePath(platform.name_platform)"></ion-img>
+      </ion-avatar>
       <ion-label color="dark">{{platform.name_platform}}</ion-label>
-      <ion-toggle [(ngModel)]="isToggled(platform.status_platform)" slot="end"></ion-toggle>
+      <ion-toggle [(ngModel)]="platform.status_platform"
+                  slot="end" [id]="platform.id_platform" (ionChange)="changeStatusPlatform(platform)"></ion-toggle>
     </ion-item>
 
   </ion-list>
