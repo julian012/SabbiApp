@@ -37,6 +37,8 @@ export class PlatformsPage implements OnInit {
     );
   }
 
+
+
   public createPlatform(data: string): void{
     let platform = new PlatformModel();
     platform.status_platform = true;

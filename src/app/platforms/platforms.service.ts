@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HTTP } from '@ionic-native/http/ngx';
+import { Observable } from 'rxjs';
 import {PlatformModel} from '../models/Platform.model';
 import {HTTP_URL} from '../models/httpStatus';
 import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions';
@@ -10,11 +11,18 @@ import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions
 })
 export class PlatformsService {
 
-  constructor(private http : HttpClient) {}
+  constructor(private http2 : HTTP,
+              private http : HttpClient) {}
+
+
 
   public getDataPlatforms(): Observable<PlatformModel[]>{
     return this.http.get<PlatformModel[]>(HTTP_URL+'/platforms');
   }
+
+  /*public getDataPlatforms():Observable<PlatformModel[]>{
+    return this.http2.get<PlatformModel[]>(HTTP_URL + '/platforms',{},{});
+  }*/
 
   public createPlatform( platform : PlatformModel ): Observable<PlatformModel>{
     console.log(platform);
