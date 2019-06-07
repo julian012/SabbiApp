@@ -15,6 +15,7 @@ import {__await} from 'tslib';
 export class PlatformsPage implements OnInit {
 
   public dataPlatform: Array<PlatformModel>;
+  public result;
 
   constructor(
       private dataPlatformService : PlatformsService,
@@ -33,7 +34,8 @@ export class PlatformsPage implements OnInit {
       this.dataPlatform = res;
       console.log(this.dataPlatform);
     },
-        (error: any) => this.dataPlatform = new Array<PlatformModel>()
+        (error: any) => {this.dataPlatform = new Array<PlatformModel>();
+        this.result = error.message;}
     );
   }
 
@@ -124,6 +126,16 @@ export class PlatformsPage implements OnInit {
     await alert.present();
   }
 
+  async pressed(platform : PlatformModel){
+    let alert = await this.alertCtrl.create({
+      header: platform.name_platform,
+      subHeader: 'Mensaje de prueba',
+      message: 'Si funciona :D',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
   public changeStatusPlatform(platform : PlatformModel){
     console.log("Cambio " + platform.name_platform + " con estado " + platform.status_platform);
     this.dataPlatformService.updatePlatform(platform).subscribe( res =>{
@@ -134,5 +146,10 @@ export class PlatformsPage implements OnInit {
   public generatePath(name : string){
     return "https://logo.clearbit.com/" + name + ".com";
     /*https://ui-avatars.com/api/?name=MercadoLibre Api para en caso de no encontrar la imagen*/
+  }
+
+  public generatePathAlternative(name : string){
+     console.log("https://ui-avatars.com/api/?name=" + name);
+    return "https://ui-avatars.com/api/?name=" + name ;
   }
 }
