@@ -31,3 +31,4 @@ git
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+platforms/android

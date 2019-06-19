@@ -13,45 +13,49 @@ export class AppComponent {
     {
       title: 'Inicio',
       url: '/home',
-      icon: 'md-home'
+      icon: 'home'
     },
     {
       title: 'Productos',
-      url: '/home',
+      url: '/products',
       icon: 'logo-buffer'
     },
     {
       title: 'Marcas',
-      url: '/list',
-      icon: 'md-pricetag'
-    },{
+      url: '/trademark',
+      icon: 'pricetag'
+    }, {
       title: 'Prendas',
-      url: '/list',
-      icon: 'ios-shirt'
-    },{
+      url: '/garment',
+      icon: 'shirt'
+    }, {
       title: 'Clientes',
-      url: '/list',
-      icon: 'md-people'
-    },{
+      url: '/client',
+      icon: 'people'
+    }, {
       title: 'Ventas',
-      url: '/list',
-      icon: 'md-cash'
-    },{
+      url: '/sales',
+      icon: 'cash'
+    }, {
       title: 'Reportes',
-      url: '/list',
-      icon: 'md-stats'
-    },{
+      url: '/reports',
+      icon: 'stats'
+    }, {
       title: 'Plataformas',
       url: '/platforms',
-      icon: 'md-basket'
-    },{
+      icon: 'basket'
+    }, {
       title: 'Configuración',
-      url: '/list',
-      icon: 'md-settings'
-    },{
+      url: '/settings',
+      icon: 'settings'
+    }, {
+      title: 'Simular compra',
+      url: '/simulate',
+      icon: 'alert'
+    }, {
       title: 'Cerrar Sesión',
       url: '/list',
-      icon: 'md-exit'
+      icon: 'exit'
     }
   ];
 
