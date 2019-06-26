@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {PlatformModel} from '../models/Platform.model';
 import {HTTP_URL} from '../models/httpStatus';
-import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions';
-import { HammerGestureConfig } from "@angular/platform-browser";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +16,7 @@ export class PlatformsService {
 
 
   public getDataPlatforms(): Observable<PlatformModel[]>{
-    return this.http.get<PlatformModel[]>(HTTP_URL+'/platforms');
+    return this.http.get<PlatformModel[]>(HTTP_URL+'/platform');
   }
 
   public createPlatform( platform : PlatformModel ): Observable<PlatformModel>{
@@ -29,5 +26,21 @@ export class PlatformsService {
 
   public updatePlatform( platform : PlatformModel ): Observable<PlatformModel>{
     return this.http.put<PlatformModel>(HTTP_URL + '/platform', platform);
+  }
+
+  public deletePlatform(platform : PlatformModel): Observable<PlatformModel>{
+    return this.http.post<PlatformModel>(HTTP_URL + '/platform/delete', platform);
+  }
+
+  public validateUrlImagePlatform( name : string){
+    let path = "https://logo.clearbit.com/";
+    let alternative = "https://ui-avatars.com/api/?name=" 
+    this.http.get(path + name).subscribe(res =>{
+      return path + name;
+    },
+        (error: any) => {
+          return alternative + name;
+        }
+    );
   }
 }

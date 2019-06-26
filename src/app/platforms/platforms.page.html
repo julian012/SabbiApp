@@ -6,6 +6,9 @@
     <ion-title>
       Menu plataforma
     </ion-title>
+    <ion-buttons (click)="savePlatformLoading()" slot="end"> 
+      <ion-icon name="help-circle"></ion-icon>
+    </ion-buttons> 
   </ion-toolbar>
 </ion-header>
 
@@ -27,9 +30,9 @@
   </ion-fab>
   <ion-list>
     <!--*[interval]="1000" (onPressStart)="pressed()*/-->
-    <ion-item *ngFor="let platform of dataPlatform" (press)="pressed(platform)" [class]="platform.id_platform">
+    <ion-item *ngFor="let platform of dataPlatform" (press)="optionsInPlatforms(platform)" [class]="platform.id_platform">
         <ion-avatar slot="start" >
-          <ion-img [src]="generatePath(platform.name_platform)" (ionError)="generatePathAlternative(platform.name_platform)"></ion-img>
+          <ion-img [src]="generatePath(platform.name_platform)" ionError="generatePathAlternative(platform.name_platform)"  ></ion-img>
         </ion-avatar>
         <ion-label color="dark">{{platform.name_platform}}</ion-label>
         <ion-toggle [(ngModel)]="platform.status_platform"

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
 import {PlatformModel} from '../models/Platform.model';
 import {PlatformsService} from './platforms.service';
 import {OK} from '../models/httpStatus';
-import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import {__await} from 'tslib';
 
@@ -20,7 +20,8 @@ export class PlatformsPage implements OnInit {
   constructor(
       private dataPlatformService : PlatformsService,
       public alertCtrl: AlertController,
-      public loadingController: LoadingController
+      public loadingController: LoadingController,
+      private actionSheetCtrl: ActionSheetController
   ) {
     this.dataPlatform= new Array<PlatformModel>();
   }
@@ -39,8 +40,6 @@ export class PlatformsPage implements OnInit {
     );
   }
 
-
-
   public createPlatform(data: string): void{
     let platform = new PlatformModel();
     platform.status_platform = true;
@@ -49,30 +48,22 @@ export class PlatformsPage implements OnInit {
     if(this.dataPlatform.find(x => x.name_platform.toUpperCase() == data.toUpperCase())){
       this.wrongMessage();
     }else{
-      console.log("Llego");
       this.dataPlatformService.createPlatform(platform).subscribe( res =>{
         console.log(res);
         this.loadPlatforms();
-        this.successfulMessage();
+        this.showMessage('Mensaje', 'Agregando plataforma', 'Plataforma agregada correctamente');
+      }, (error) =>{
+        this.wrongMessage();
       });
-
     }
-
   }
-
-
 
   async savePlatformLoading() {
     let loading = await this.loadingController.create({
-      message: 'Guardando',
+      message: 'Procesando',
       duration: 2000
     });
     await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
-
   }
 
   async showPrompt() {
@@ -96,7 +87,6 @@ export class PlatformsPage implements OnInit {
           text: 'Guardar',
           handler: data => {
             this.createPlatform(data.title);
-            console.log('Saved clicked' + data.title);
             this.savePlatformLoading();
 
           }
@@ -106,11 +96,46 @@ export class PlatformsPage implements OnInit {
     await prompt.present();
   }
 
-  async successfulMessage() {
+  async changeNamePlatform(platform : PlatformModel) {
+    let prompt = await this.alertCtrl.create({
+      header: 'Modificar Plataforma',
+      message: "Ingrese el nombre de la plataforma. Tenga en cuenta que si el nombre cambia, se va a ver reflejado tambien en los reportes",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Nombre'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Modificar',
+          handler: data => {
+            platform.name_platform = data.title;
+            this.dataPlatformService.updatePlatform(platform).subscribe( (res) => {
+              this.savePlatformLoading();
+              this.showMessage('Mensaje','Modificar plataforma','Nombre de la plataforma modificada correctamente');
+            }, (error) => {
+              this.savePlatformLoading();
+              this.showMessage('Mensaje','Modificar plataforma','Nombre de la plataforma no se pudo modificar. Verifique que no se repite con ya alguno guardado');
+            });
+          }
+        }
+      ]
+    });
+    await prompt.present();
+  }
+
+  async showMessage(header, subHeader, message){
     let alert = await this.alertCtrl.create({
-      header: 'Mensaje',
-      subHeader: 'Agregando plataforma',
-      message: 'Plataforma agregada correctamente.',
+      header,
+      subHeader,
+      message,
       buttons: ['OK']
     });
     await alert.present();
@@ -120,17 +145,7 @@ export class PlatformsPage implements OnInit {
     let alert = await this.alertCtrl.create({
       header: 'Mensaje',
       subHeader: 'Agregando plataforma',
-      message: 'El nombre de la plataforma ya existe.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async pressed(platform : PlatformModel){
-    let alert = await this.alertCtrl.create({
-      header: platform.name_platform,
-      subHeader: 'Mensaje de prueba',
-      message: 'Si funciona :D',
+      message: 'La plataforma no se pudo agregar, debido a que el nombre de la plataforma ya existe.',
       buttons: ['OK']
     });
     await alert.present();
@@ -140,10 +155,11 @@ export class PlatformsPage implements OnInit {
     console.log("Cambio " + platform.name_platform + " con estado " + platform.status_platform);
     this.dataPlatformService.updatePlatform(platform).subscribe( res =>{
       console.log(res);
-    });;
+    });
   }
 
   public generatePath(name : string){
+    //return this.dataPlatformService.validateUrlImagePlatform(name);
     return "https://logo.clearbit.com/" + name + ".com";
     /*https://ui-avatars.com/api/?name=MercadoLibre Api para en caso de no encontrar la imagen*/
   }
@@ -152,4 +168,61 @@ export class PlatformsPage implements OnInit {
      console.log("https://ui-avatars.com/api/?name=" + name);
     return "https://ui-avatars.com/api/?name=" + name ;
   }
+
+  async deletePlatform(platform : PlatformModel){
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmación',
+      message: `¿Seguro desea eliminar la plataforma ${platform.name_platform}?`,
+      cssClass: 'options-as-platforms',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+
+        }, {
+          text: 'Continuar',
+          handler: () => {
+            this.dataPlatformService.deletePlatform(platform).subscribe( res =>{
+              this.showMessage('Mensaje','Eliminando plataforma', 'Plataforma eliminada correctamente');
+              this.savePlatformLoading();
+              this.loadPlatforms();
+            }, (error) => {
+              this.showMessage('Error', 'Eliminando plataforma','No se puede eliminar la plataforma, debido a que ya fue asignada a una venta. En tal caso de no usarla más, la puede desactivar')
+            });;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  
+  }
+
+  async optionsInPlatforms(platform : PlatformModel) {
+     const actionSheet = await this.actionSheetCtrl.create({
+      header: platform.name_platform,
+      buttons: [{
+        text: 'Eliminar',
+        icon: 'close-circle',
+        cssClass: 'danger',
+        handler: () => {
+          this.deletePlatform(platform);
+        }
+      }, {
+        text: 'Cambiar nombre',
+        icon: 'build',
+        handler: () => {
+          this.changeNamePlatform(platform);
+        }
+      }, {
+        text: 'Cancelar',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+    
 }
+}
+
+//(ionError)="[src] = generatePathAlternative(platform.name_platform)"
