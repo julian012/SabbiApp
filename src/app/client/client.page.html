@@ -14,7 +14,7 @@
   <ion-row>
     <ion-col size="12">
       <ion-list *ngFor="let client of list">
-        <ion-card >
+        <ion-card no-margin no-padding>
           <ion-row>
             <ion-col size="2" >
               <img [alt]="client.first_name" [src]="getIconClient(client.first_name)">

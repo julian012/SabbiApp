@@ -23,7 +23,7 @@ export class ClientService {
   }
 
   public getIconClient( name: string) {
-    const alternative = 'https://ui-avatars.com/api/?name=';
+    const alternative = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&bold=true&rounded=true&name=';
     return alternative + name;
   }
 }
