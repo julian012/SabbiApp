@@ -1,26 +1,28 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {Routes, RouterModule} from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { ProductsPage } from './products.page';
+import {ProductsPage} from './products.page';
+import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProductsPage
-  }
+    {
+        path: '',
+        component: ProductsPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [ProductsPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HttpClientModule,
+        RouterModule.forChild(routes)
+    ],
+    declarations: [ProductsPage]
 })
 export class ProductsPageModule {}
