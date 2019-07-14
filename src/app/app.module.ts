@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.service';
+import { ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.serv
   entryComponents: [],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule
