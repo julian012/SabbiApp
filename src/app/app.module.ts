@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
 import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.service';
 
 
@@ -22,7 +21,6 @@ import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.serv
     HttpClientModule
   ],
   providers: [
-    HTTP,
     StatusBar,
     SplashScreen,
     HttpClient,

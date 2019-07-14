@@ -30,6 +30,10 @@ export class PlatformsPage implements OnInit {
     this.loadPlatforms();
   }
 
+  public showTutorialPage(){
+    this.showMessage('Mensaje','Tutorial plataforma', 'Sirvio');
+  }
+
   public loadPlatforms(): void{
     this.dataPlatformService.getDataPlatforms().subscribe(res =>{
       this.dataPlatform = res;
