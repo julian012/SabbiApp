@@ -75,3 +75,16 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+.modalClientInfo .modal-wrapper{
+  top: 10%;
+  left: 10%;
+  height: 80%;
+  bottom: 10%;
+  right: 10%;
+  width: 80%;
+  position: absolute;
+  display: block;
+  border-radius: 8px;
+}
+

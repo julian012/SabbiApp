@@ -22,8 +22,9 @@ export class ClientService {
     });
   }
 
-  public getIconClient( name: string) {
-    const alternative = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&bold=true&rounded=true&name=';
+  public getIconClient( name: string, color: string) {
+    const alternative = `https://ui-avatars.com/api/?background=${color}&size=64&color=fff&bold=true&rounded=true&name=`;
+    //const alternative = `https://ui-avatars.com/api/?size=64&color=fff&bold=true&rounded=true&name=`;
     return alternative + name;
   }
 }
