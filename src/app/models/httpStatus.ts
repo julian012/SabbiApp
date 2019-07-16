@@ -8,4 +8,4 @@ export const HTTP_URL = 'https://sabbyapp.herokuapp.com';
 export const API_DOLLAR_URL = 'https://api.sunat.cloud/cambio';
 export const DATE_FORMAT = 'yyyy-mm-dd';
 // export const HTTP_URL = 'http://localhost:3000';
-// >>>>>>> 8e622ed0d5d424f2463a0a600f212393607a0036
+// >>>>>>> adc2900bf1428f1d0fc75b79d72eecbe84fd6e45

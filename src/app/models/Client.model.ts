@@ -11,4 +11,5 @@ export class ClientModel {
     public typeuser: string;
     public password: string;
     public nickname: string;
+    public color?: string;
 }

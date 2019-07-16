@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import { ClientDetailComponent} from './client-detail/client-detail.component';
 import { IonicModule } from '@ionic/angular';
 
 import { ClientPage } from './client.page';
@@ -21,6 +21,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClientPage]
+  declarations: [ClientPage, ClientDetailComponent],
+  entryComponents: [
+      ClientDetailComponent
+  ]
 })
 export class ClientPageModule {}
