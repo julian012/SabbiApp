@@ -10,6 +10,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-list-header class="header-list" color="danger">
+      Marcas
+    </ion-list-header>
+    <ion-item *ngFor="let trademark of dataTrademark" [class]="trademark.id_trademark">
+      {{trademark.name_trademark}}
+    </ion-item>
+  </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="md-add" ></ion-icon>
