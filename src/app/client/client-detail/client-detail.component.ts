@@ -9,9 +9,15 @@ import {ClientModel} from '../../models/Client.model';
 export class ClientDetailComponent implements OnInit {
 
   public dataClient: ClientModel;
-
+  public backgroudColor = document.querySelector('.changeColor');
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.backgroudColor.setAttribute('--background', `#${this.dataClient.color}`);
+  }
+
+  public getColorHeader(color: string) {
+    return '#' + color;
+  }
 
 }

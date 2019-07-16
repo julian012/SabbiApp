@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {HTTP} from '@ionic-native/http/ngx';
 import {Observable} from 'rxjs';
 import {PlatformModel} from '../models/Platform.model';
 import {HTTP_URL} from '../models/httpStatus';
@@ -10,8 +9,7 @@ import {HTTP_URL} from '../models/httpStatus';
 })
 export class PlatformsService {
 
-    constructor(private http2: HTTP,
-                private http: HttpClient) {
+    constructor(private http: HttpClient) {
     }
 
     public getDataPlatforms(): Observable<PlatformModel[]> {

@@ -10,14 +10,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar debounce="500" (ionChange)="getClients()" [(ngModel)]="values" animated placeholder="Buscar"></ion-searchbar>
+  <ion-searchbar debounce="500" (ionChange)="filter()" [(ngModel)]="values" animated placeholder="Buscar"></ion-searchbar>
   <ion-row>
     <ion-col size="12">
       <ion-list *ngFor="let client of list">
           <ion-row (click)="openClientInfo(client)">
             <ion-col size="2" offset="1" >
                 <ion-thumbnail >
-                  <img [alt]="client.first_name" [src]="getIconClient(client.first_name)">
+                  <img [alt]="client.first_name" [src]="getIconClient(client)">
                 </ion-thumbnail>
             </ion-col>
             <ion-col size="6">
