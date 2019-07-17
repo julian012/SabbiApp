@@ -7,6 +7,8 @@ import {IonicModule} from '@ionic/angular';
 
 import {ProductsPage} from './products.page';
 import {HttpClientModule} from '@angular/common/http';
+import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
+import {ModalAddProductPageModule} from '../modal-add-product/modal-add-product.module';
 
 const routes: Routes = [
     {
@@ -16,12 +18,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
+    entryComponents: [
+      ModalAddProductPage
+    ],
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
         HttpClientModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        ModalAddProductPageModule
     ],
     declarations: [ProductsPage]
 })

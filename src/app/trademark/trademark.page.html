@@ -15,7 +15,7 @@
 <!--            Marcas-->
 <!--        </ion-list-header>-->
         <ion-item *ngFor="let trademark of dataTrademark" [class]="trademark.id_trademark">
-            <ion-thumbnail slot="start">
+            <ion-thumbnail slot="end">
                 <ion-img [src]="trademark.path"></ion-img>
             </ion-thumbnail>
             <ion-label>{{trademark.name_trademark}}</ion-label>

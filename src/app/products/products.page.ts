@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductsService} from './products.service';
 import {ProductModel} from '../models/Product.model';
+import { ModalController } from '@ionic/angular';
+import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
 
 @Component({
     selector: 'app-products',
@@ -10,11 +12,10 @@ import {ProductModel} from '../models/Product.model';
 })
 export class ProductsPage implements OnInit {
 
-    // @ts-ignore
     public dataProducts: Array<ProductModel>;
     public result;
 
-    constructor(public productsService: ProductsService) {
+    constructor(public productsService: ProductsService, private modalController: ModalController) {
         this.dataProducts = new Array<ProductModel>();
     }
 
@@ -33,4 +34,12 @@ export class ProductsPage implements OnInit {
         );
     }
 
+    async addProductPage() {
+        const modal = await this.modalController.create({
+            component: ModalAddProductPage
+        });
+        await modal.present();
+        const { data } = await modal.onDidDismiss();
+        console.log(data);
+    }
 }

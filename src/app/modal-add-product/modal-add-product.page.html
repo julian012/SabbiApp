@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Agregar Producto</ion-title>
+        <ion-button slot="end" fill="clear" size="large" color="danger" (click)="cancel()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="productForm">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label position="floating">Nombre del producto</ion-label>
+                        <ion-input formControlName="name" type="text"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.name">
+                            <div class="error-message"
+                                 *ngIf="productForm.get('name').hasError(error.type) && (productForm.get('name').dirty || productForm.get('name').touched)">
+                                {{error.message}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label position="floating">Cantidad</ion-label>
+                        <ion-input type="number" formControlName="size"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.size">
+                            <div class="error-message"
+                                 *ngIf="productForm.get('size').hasError(error.type) && (productForm.get('size').dirty || productForm.get('size').touched)">
+                                {{error.message}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label position="floating">Precio</ion-label>
+                        <ion-input type="number" formControlName="price">
+                        </ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.price">
+                            <div class="error-message"
+                                 *ngIf="productForm.get('price').hasError(error.type) && (productForm.get('price').dirty || productForm.get('price').touched)">
+                                {{error.message}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label position="floating">Precio de venta</ion-label>
+                        <ion-input type="number" formControlName="salePrice"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.salePrice">
+                            <div class="error-message"
+                                 *ngIf="productForm.get('salePrice').hasError(error.type) && (productForm.get('salePrice').dirty || productForm.get('salePrice').touched)">
+                                {{error.message}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-fab vertical="bottom">
+                <ion-row>
+                    <ion-col size="3" offset="2">
+                        <ion-button [disabled]="productForm.valid" color="primary" (click)="accept()">
+                            Aceptar
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="3" offset="4">
+                        <ion-button color="danger" (click)="cancel()">
+                            Cancelar
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-fab>
+        </ion-grid>
+    </form>
+
+
+</ion-content>
