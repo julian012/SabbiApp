@@ -13,7 +13,7 @@ export class ClientDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.backgroudColor.setAttribute('--background', `#${this.dataClient.color}`);
+    //this.backgroudColor.setAttribute('--background', `#${this.dataClient.color}`);
   }
 
   public getDate(date: string) {
