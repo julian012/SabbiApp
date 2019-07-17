@@ -7,5 +7,23 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-img src="../../../assets/img/user.png" class="imgModal"></ion-img>
+          </ion-avatar>
+          <ion-list>
+            <ion-item>
+              Identificación: {{dataClient.document_user}}
+            </ion-item>
+            <ion-item>
+              Fecha de creación: {{ getDate(dataClient.creation_date)}}
+            </ion-item>
+          </ion-list>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

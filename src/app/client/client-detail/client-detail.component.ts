@@ -16,6 +16,11 @@ export class ClientDetailComponent implements OnInit {
     this.backgroudColor.setAttribute('--background', `#${this.dataClient.color}`);
   }
 
+  public getDate(date: string) {
+    const newDate = new Date(date);
+    return `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
+  }
+
   public getColorHeader(color: string) {
     return '#' + color;
   }
