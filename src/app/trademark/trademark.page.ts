@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TrademarkModel} from '../models/Trademark.model';
 import {TrademarkService} from './trademark.service';
-import {PlatformModel} from '../models/Platform.model';
 
 @Component({
     selector: 'app-trademark',
