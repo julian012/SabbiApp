@@ -7,8 +7,7 @@ import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
 @Component({
     selector: 'app-products',
     templateUrl: './products.page.html',
-    styleUrls: ['./products.page.scss'],
-    providers: [ProductsService]
+    styleUrls: ['./products.page.scss']
 })
 export class ProductsPage implements OnInit {
 
