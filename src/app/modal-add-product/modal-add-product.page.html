@@ -13,7 +13,7 @@
             <ion-row>
                 <ion-col>
                     <ion-item>
-                        <ion-label position="floating">Nombre del producto</ion-label>
+                        <ion-label class="label-form" position="floating">Nombre del producto</ion-label>
                         <ion-input formControlName="name" type="text"></ion-input>
                     </ion-item>
                     <div class="error-messages">
@@ -27,7 +27,7 @@
                 </ion-col>
                 <ion-col>
                     <ion-item>
-                        <ion-label position="floating">Cantidad</ion-label>
+                        <ion-label class="label-form" position="floating">Cantidad</ion-label>
                         <ion-input type="number" formControlName="size"></ion-input>
                     </ion-item>
                     <div class="error-messages">
@@ -43,7 +43,7 @@
             <ion-row>
                 <ion-col>
                     <ion-item>
-                        <ion-label position="floating">Precio</ion-label>
+                        <ion-label class="label-form" position="floating">Precio</ion-label>
                         <ion-input type="number" formControlName="price">
                         </ion-input>
                     </ion-item>
@@ -58,7 +58,7 @@
                 </ion-col>
                 <ion-col>
                     <ion-item>
-                        <ion-label position="floating">Precio de venta</ion-label>
+                        <ion-label class="label-form" position="floating">Precio de venta</ion-label>
                         <ion-input type="number" formControlName="salePrice"></ion-input>
                     </ion-item>
                     <div class="error-messages">
@@ -69,6 +69,28 @@
                             </div>
                         </ng-container>
                     </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="6">
+                    <ion-label class="label-form">Género</ion-label>
+                    <ion-item>
+                        <ion-checkbox slot="start" color="danger"></ion-checkbox>
+                        <ion-label>Masculino</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-checkbox slot="start" color="danger"></ion-checkbox>
+                        <ion-label>Femenino</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ng-container>
+                        <ion-input ></ion-input>
+                        <ion-button color="light" (click)="showTrademarks()">
+                            <ion-icon slot="start" name="arrow-dropdown-circle"></ion-icon>
+                        </ion-button>
+                        -->
+                    </ng-container>
                 </ion-col>
             </ion-row>
             <ion-fab vertical="bottom">
@@ -87,6 +109,4 @@
             </ion-fab>
         </ion-grid>
     </form>
-
-
 </ion-content>
