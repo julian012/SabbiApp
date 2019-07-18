@@ -40,9 +40,10 @@ export class ModalAddProductPage implements OnInit {
             name: new FormControl('', Validators.compose([
                 Validators.required,
                 Validators.maxLength(30)
-            ])), size: new FormControl('', validatorNumField)
-            , price: new FormControl('', validatorNumField)
-            , salePrice: new FormControl('', validatorNumField)
+            ])),
+            size: new FormControl('', validatorNumField),
+            price: new FormControl('', validatorNumField),
+            salePrice: new FormControl('', validatorNumField)
         });
     }
 
