@@ -104,13 +104,11 @@
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating">Número de documento</ion-label>
-              <ion-input type="number" formControlName="document_user"></ion-input>
+              <ion-input type="number" formControlName="document_user" maxlength="11" minlength="8"></ion-input>
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.document_user">
-                <ion-label>{{error.type}}</ion-label>
-                <div class="error-message"
-                     *ngIf="myForm.get('document_user').hasError(error.type) && (myForm.get('document_user').dirty || myForm.get('document_user').touched)">
+                <div class="error-message" *ngIf="myForm.get('document_user').hasError(error.type) && (myForm.get('document_user').dirty || myForm.get('document_user').touched)">
                   {{error.message}}
                 </div>
               </ng-container>
@@ -123,8 +121,7 @@
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.email_cuser">
-                <div class="error-message"
-                     *ngIf="myForm.get('email_cuser').hasError(error.type) && (myForm.get('email_cuser').dirty || myForm.get('email_cuser').touched)">
+                <div class="error-message" *ngIf="myForm.get('email_cuser').hasError(error.type) && (myForm.get('email_cuser').dirty || myForm.get('email_cuser').touched)">
                   {{error.message}}
                 </div>
               </ng-container>
@@ -135,6 +132,26 @@
               <ion-label position="floating">Edad</ion-label>
               <ion-input type="text" formControlName="age_user" ></ion-input>
             </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating">Fecha de nacimiento (DD/MM/YYYY)</ion-label>
+              <ion-datetime displayFormat="DD MM YY" placeholder="Seleccione la fecha" formControlName="birthdate_user" ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label *ngIf="!existPhone()" color="medium" text-center> Sin telefono </ion-label>
+            <ion-item *ngFor="let phone of phoneClientChanges">
+              <ion-label position="floating">Numero de telefono</ion-label>
+              <ion-input type="text" [(ngModel)]="phone.number_phone" [ngModelOptions]="{ standalone : true}"></ion-input>
+              <ion-icon name="close" slot="end" (click)="deletePhone(phone)"></ion-icon>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4" offset="4">
+            <ion-button color="warning" (click)="addPhone()">
+              Agregar
+              <ion-icon name="call" slot="start"></ion-icon>
+            </ion-button>
           </ion-col>
           <ion-col size="12">
             <ion-label text-center=""> Genero </ion-label>
@@ -152,26 +169,9 @@
                 </ion-item>
               </ion-radio-group>
             </ion-list>
-
           </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Fecha de nacimiento (DD/MM/YYYY)</ion-label>
-              <ion-datetime displayFormat="DD MM YY" placeholder="Seleccione la fecha" formControlName="birthdate_user" ></ion-datetime>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item *ngFor="let phone of phoneClientChanges">
-              <ion-label position="floating">Numero de telefono</ion-label>
-              <ion-input type="text" [(ngModel)]="phone.number_phone" [ngModelOptions]="{ standalone : true}"></ion-input>
-              <ion-icon name="close" slot="end" (click)="deletePhone(phone)"></ion-icon>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12">
-            <ion-button color="medium" (click)="addPhone()">Agregar numero de telefono</ion-button>
-          </ion-col><br>
-          <ion-col size="12">
-            <ion-button color="success" [disabled]="!myForm.valid" type="submit">Guardar</ion-button>
+          <ion-col size="8" offset="2">
+            <ion-button color="success" [disabled]="!myForm.valid" type="submit">Guardar Cambios</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

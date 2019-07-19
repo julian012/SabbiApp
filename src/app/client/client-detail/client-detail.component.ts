@@ -128,17 +128,17 @@ export class ClientDetailComponent implements OnInit {
     this.myForm = this.formBuilder.group({
       document_user : new FormControl(this.dataClientChanges.document_user, Validators.compose([
         Validators.required,
-        Validators.maxLength(11),
-        Validators.minLength(8)
+        Validators.max(99999999999),
+        Validators.min(10000000)
       ])),
       first_name : new FormControl(this.dataClientChanges.first_name, Validators.compose([
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*'),
           Validators.maxLength(25)
           ])),
       last_name : new FormControl(this.dataClientChanges.last_name, Validators.compose([
         Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*'),
         Validators.maxLength(25)
       ])),
       email_cuser : new FormControl(this.dataClientChanges.email_cuser, Validators.compose([

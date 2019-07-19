@@ -21,15 +21,15 @@ export const ERRORMESSAGES = {
         {type: 'required', message: 'Campo obligatorio'},
         {type: 'pattern', message: 'No se pueden ingresar numeros en los apellidos'},
         {type: 'maxlength', message: 'El apellido no puede supererar los 25 caracteres'}
-    ], email_curser: [
+    ], email_cuser: [
         {type: 'pattern', message: 'Correo ingresado no es valido'}
     ], age_user: [
         {type: 'min', message: 'La edad debe ser mayor a 15'},
         {type: 'max', message: 'La edad debe ser menor a 90' }
     ], document_user: [
         {type: 'required', message: 'Campo obligatorio'},
-        {type: 'maxlength', message: 'La longitud del documento no debe superar los 11 caracteres'},
-        {type: 'minlength', message: 'La longitud del codumento no debe ser menor a los 8 caracteres'}
+        {type: 'max', message: 'La longitud del documento no debe superar los 11 caracteres'},
+        {type: 'min', message: 'La longitud del codumento no debe ser menor a los 8 caracteres'}
     ]
 };
 
