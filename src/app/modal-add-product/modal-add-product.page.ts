@@ -8,6 +8,8 @@ import {TrademarkService} from '../trademark/trademark.service';
 import {PickerModel} from '../models/Picker.model';
 import {GarmentService} from '../garment/garment.service';
 import {GarmentModel} from '../models/Garment.model';
+import {AlertController} from '@ionic/angular';
+import {ERRORMESSAGES, ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
 
 @Component({
     selector: 'app-modal-add-product',
@@ -16,38 +18,23 @@ import {GarmentModel} from '../models/Garment.model';
 })
 export class ModalAddProductPage implements OnInit {
 
+    public MESSAGE_CANCEL_ADD = '¿Seguro desea cancelar?';
+    public MESSAGE_CONFIRM_ADD = '¿Seguro desea agregar el producto?';
     public dataProduct: ProductModel;
     public productForm: FormGroup;
     public trademarkPickerList: Array<{ text, value }>;
     public garmentPickerList: Array<{ text, value }>;
     public trademark: TrademarkModel;
     public garment: GarmentModel;
+    public errorMessages = ERRORMESSAGES_PRODUCT;
+    public gender = '';
     public pickerTradeActive = false;
-
-    public errorMessages = {
-        name: [
-            {type: 'required', message: 'El nombre es necesario'},
-            {type: 'maxLength', message: 'El numero de caracteres permitidos es hasta 10'}
-        ], size: [
-            {type: 'required', message: 'La cantidad es necesaria'},
-            {type: 'maxLength', message: 'El numero de caracteres permitidos es hasta 10'}
-        ], price: [
-            {type: 'required', message: 'El precio es necesario'},
-            {type: 'maxLength', message: 'El numero de caracteres permitidos es hasta 10'}
-        ], salePrice: [
-            {type: 'required', message: 'El precio de venta es necesario'},
-            {type: 'maxLength', message: 'El numero de caracteres permitidos es hasta 10'}
-        ]
-    };
 
     constructor(private modalCtrl: ModalController, public formBuilder: FormBuilder,
                 public pickerCtrl: PickerController, public trademarkService: TrademarkService,
-                public garmentservice: GarmentService) {
+                public garmentservice: GarmentService, public alertCtrl: AlertController) {
         this.dataProduct = new ProductModel();
-        const validatorNumField = Validators.compose([
-            Validators.required,
-            Validators.maxLength(10)
-        ]);
+        this.createProductForm();
         this.dataProduct = new ProductModel();
         this.trademarkPickerList = new Array<{ text, value }>();
         this.garmentPickerList = new Array<{ text, value }>();
@@ -58,19 +45,31 @@ export class ModalAddProductPage implements OnInit {
         this.garment = new GarmentModel();
         this.garment.name_garment = 'Opción';
         this.trademark.id_trademark = 0;
-
-        this.productForm = this.formBuilder.group({
-            name: new FormControl('', Validators.compose([
-                Validators.required,
-                Validators.maxLength(30)
-            ])), size: new FormControl('', validatorNumField)
-            , price: new FormControl('', validatorNumField)
-            , salePrice: new FormControl('', validatorNumField)
-        });
     }
 
 
     ngOnInit() {
+    }
+
+    public createProductForm() {
+        const validatorNumField = Validators.compose([
+            Validators.required,
+            Validators.min(100),
+            Validators.max(9999999999)
+        ]);
+        this.productForm = this.formBuilder.group({
+            name: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.maxLength(20)
+            ])), size: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.min(1),
+                Validators.max(99999)
+            ]))
+            , price: new FormControl('', validatorNumField)
+            , salePrice: new FormControl('', validatorNumField)
+            , gender: new FormControl('', Validators.required)
+        });
     }
 
     async loadTrademarks() {
@@ -92,10 +91,27 @@ export class ModalAddProductPage implements OnInit {
         });
     }
 
-    cancel() {
-        this.modalCtrl.dismiss({
-            value: false
+    async cancel(message: string) {
+        const alert = await this.alertCtrl.create({
+            header: 'Confirmación',
+            message,
+            cssClass: 'options-as-platforms',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                }, {
+                    text: 'Continuar',
+                    handler: async () => {
+                        await alert.present();
+                        this.modalCtrl.dismiss({
+                            value: false
+                        });
+                    }
+                }
+            ]
         });
+        await alert.present();
     }
 
     async showTrademarks() {
@@ -150,7 +166,7 @@ export class ModalAddProductPage implements OnInit {
         };
         const picker = await this.pickerCtrl.create(garments);
         picker.present();
-        const onDismiss = await picker.onDidDismiss().then( () => {
+        const onDismiss = await picker.onDidDismiss().then(() => {
             this.pickerTradeActive = false;
         });
     }
