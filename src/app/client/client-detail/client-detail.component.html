@@ -78,12 +78,11 @@
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating">Nombres</ion-label>
-              <ion-input formControlName="first_name" type="text" ></ion-input>
+              <ion-input formControlName="first_name" type="text" required ></ion-input>
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.first_name">
-                <div class="error-message"
-                     *ngIf="myForm.get('first_name').hasError(error.type) && (myForm.get('first_name').dirty || myForm.get('first_name').touched)">
+                <div class="error-message" *ngIf="myForm.get('first_name').hasError(error.type) && (myForm.get('first_name').dirty || myForm.get('first_name').touched)">
                   {{error.message}}
                 </div>
               </ng-container>
@@ -96,8 +95,7 @@
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.last_name">
-                <div class="error-message"
-                     *ngIf="myForm.get('last_name').hasError(error.type) && (myForm.get('last_name').dirty || myForm.get('last_name').touched)">
+                <div class="error-message" *ngIf="myForm.get('last_name').hasError(error.type) && (myForm.get('last_name').dirty || myForm.get('last_name').touched)">
                   {{error.message}}
                 </div>
               </ng-container>
@@ -110,6 +108,7 @@
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.document_user">
+                <ion-label>{{error.type}}</ion-label>
                 <div class="error-message"
                      *ngIf="myForm.get('document_user').hasError(error.type) && (myForm.get('document_user').dirty || myForm.get('document_user').touched)">
                   {{error.message}}

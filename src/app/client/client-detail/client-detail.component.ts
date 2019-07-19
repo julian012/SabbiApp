@@ -4,7 +4,7 @@ import {PhoneModel} from '../../models/Phone.model';
 import { ClientDetailService } from './client-detail.service';
 import {SaleModel} from '../../models/Sale.model';
 import {AlertController} from '@ionic/angular';
-import {FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
 import {ERRORMESSAGES} from '../../models/httpStatus';
 
 @Component({
@@ -27,7 +27,7 @@ export class ClientDetailComponent implements OnInit {
   public errorMessages = ERRORMESSAGES;
   public first_name: AbstractControl;
   public last_name: AbstractControl;
-  public
+  public document_user: AbstractControl;
 
   constructor(private dataClientService: ClientDetailService,
               public alertCtrl: AlertController,
@@ -99,7 +99,7 @@ export class ClientDetailComponent implements OnInit {
     this.phoneClientChanges = this.phoneClient;
     this.deletePhoneList = [];
     console.log('Datos copiados', this.dataClientChanges);
-    this.myForm = this.createMyForm();
+    this.createMyForm();
   }
 
   async editClient(message: string) {
@@ -125,23 +125,31 @@ export class ClientDetailComponent implements OnInit {
   }
 
   public createMyForm() {
-    return this.formBuilder.group({
-      document_user : [this.dataClientChanges.document_user, Validators.compose([
+    this.myForm = this.formBuilder.group({
+      document_user : new FormControl(this.dataClientChanges.document_user, Validators.compose([
         Validators.required,
         Validators.maxLength(11),
         Validators.minLength(8)
-      ])],
-      first_name : [this.dataClientChanges.first_name, Validators.required],
-      last_name : [this.dataClientChanges.last_name, Validators.required],
-      email_cuser : [this.dataClientChanges.email_cuser, Validators.compose([
+      ])),
+      first_name : new FormControl(this.dataClientChanges.first_name, Validators.compose([
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.maxLength(25)
+          ])),
+      last_name : new FormControl(this.dataClientChanges.last_name, Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-Z ]*'),
+        Validators.maxLength(25)
+      ])),
+      email_cuser : new FormControl(this.dataClientChanges.email_cuser, Validators.compose([
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])],
-      birthdate_user : [this.getDateISOFormat(), Validators.minLength(7)],
-      age_user : [this.dataClientChanges.age_user, Validators.compose([
+      ])),
+      birthdate_user : new FormControl(this.getDateISOFormat(), Validators.minLength(7)),
+      age_user : new FormControl(this.dataClientChanges.age_user, Validators.compose([
         Validators.min(15),
           Validators.max(90)
-      ])],
-      gender_user : [this.dataClientChanges.gender_user, Validators.required]
+      ])),
+      gender_user : new FormControl(this.dataClientChanges.gender_user, Validators.required)
     });
   }
 
@@ -150,12 +158,12 @@ export class ClientDetailComponent implements OnInit {
     return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
   }
 
-  public addPhone(){
+  public addPhone() {
     this.phoneClientChanges.push( new PhoneModel());
   }
 
   public deletePhone(phone: PhoneModel) {
-    for (let i = 0; i < this.phoneClientChanges.length ; i++){
+    for (let i = 0; i < this.phoneClientChanges.length ; i++) {
       if (this.phoneClientChanges[i].number_phone === phone.number_phone) {
         this.deletePhoneList.push(phone);
         this.phoneClientChanges.splice(i, 1);

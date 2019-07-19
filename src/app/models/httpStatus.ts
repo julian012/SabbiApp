@@ -14,9 +14,13 @@ export const SALE_ROUTING = '/sale';
 
 export const ERRORMESSAGES = {
     first_name: [
-        {type: 'required', message: 'Campo obligatorio'}
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'pattern', message: 'No se pueden ingresar numeros en los nombres'},
+        {type: 'maxlength', message: 'El nombre no puede supererar los 25 caracteres'}
     ], last_name: [
-        {type: 'required', message: 'Campo obligatorio'}
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'pattern', message: 'No se pueden ingresar numeros en los apellidos'},
+        {type: 'maxlength', message: 'El apellido no puede supererar los 25 caracteres'}
     ], email_curser: [
         {type: 'pattern', message: 'Correo ingresado no es valido'}
     ], age_user: [
@@ -24,8 +28,8 @@ export const ERRORMESSAGES = {
         {type: 'max', message: 'La edad debe ser menor a 90' }
     ], document_user: [
         {type: 'required', message: 'Campo obligatorio'},
-        {type: 'maxLength', message: 'La longitud del documento no debe superar los 11 caracteres'},
-        {type: 'minLength', message: 'La longitud del codumento no debe ser menor a los 8 caracteres'}
+        {type: 'maxlength', message: 'La longitud del documento no debe superar los 11 caracteres'},
+        {type: 'minlength', message: 'La longitud del codumento no debe ser menor a los 8 caracteres'}
     ]
 };
 
