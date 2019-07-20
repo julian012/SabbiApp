@@ -33,6 +33,23 @@ export const ERRORMESSAGES = {
     ]
 };
 
-
+export const ERRORMESSAGES_PRODUCT = {
+    name: [
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'maxlength', message: 'El nombre no puede superar los 25 caracteres'}
+    ], size: [
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'max', message: 'La cantidad de productos es mayor a 99999'},
+        {type: 'min', message: 'La cantidad de productos es menor a 1'}
+    ], price: [
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'min', message: 'El precio debe ser mayor que o igual a $100'},
+        {type: 'max', message: 'El precio supera las 10 cifras'}
+    ], salePrice: [
+        {type: 'required', message: 'Campo obligatorio'},
+        {type: 'min', message: 'El precio debe ser mayor que o igual a $100'},
+        {type: 'max', message: 'El precio supera las 10 cifras'}
+    ]
+};
 
 
