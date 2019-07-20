@@ -7,8 +7,10 @@ import {TrademarkModel} from '../models/Trademark.model';
 import {TrademarkService} from '../trademark/trademark.service';
 import {GarmentService} from '../garment/garment.service';
 import {GarmentModel} from '../models/Garment.model';
-import {AlertController} from '@ionic/angular';
-import {ERRORMESSAGES, ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
+import {ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
+import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
+import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker/ngx';
+import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
 
 @Component({
     selector: 'app-modal-add-product',
