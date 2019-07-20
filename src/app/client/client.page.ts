@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import {ClientModel} from '../models/Client.model';
-import { ModalController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
 import {FormGroup} from '@angular/forms';
 import {PhoneModel} from '../models/Phone.model';
 import {compilePipeFromMetadata} from '@angular/compiler';
 import {PlatformModel} from '../models/Platform.model';
-import {AddclientComponent} from './addclient/addclient.component';
+import {AddClientFormComponent} from './addclient/add-client-form.component';
 
 @Component({
   selector: 'app-client',
@@ -20,7 +20,8 @@ export class ClientPage implements OnInit {
   public values = '';
 
   constructor( private dataClientService: ClientService,
-               private modal: ModalController) {
+               private modal: ModalController,
+               public alertCtrl: AlertController) {
     this.list = this.dataClientService.getClients();
   }
 
@@ -52,8 +53,11 @@ export class ClientPage implements OnInit {
 
   async addClient() {
     const modal = await this.modal.create({
-      component : AddclientComponent,
-      cssClass : 'modalClientInfo'
+      component : AddClientFormComponent,
+      cssClass : 'modalClientInfo',
+      componentProps : {
+        clientPage : this
+      },
     });
     await modal.present();
   }
@@ -62,13 +66,44 @@ export class ClientPage implements OnInit {
     return this.dataClientService.getIconClient(client);
   }
 
+  public saveClient(form: FormGroup, list: PhoneModel[]) {
+    const client = new ClientModel();
+    if (form.value.birthdate_user) {
+      const date =  new Date(form.value.birthdate_user);
+      client.birthdate_user = date.toISOString();
+    } else {
+      client.age_user = form.value.age_user;
+    }
+    client.document_user = form.value.document_user;
+    client.email_cuser = form.value.email_cuser;
+    client.first_name = form.value.first_name;
+    client.last_name = form.value.last_name;
+    client.gender_user = form.value.gender_user;
+    client.typeuser = 'C';
+    const creation = new Date();
+    client.creation_date = creation.toISOString();
+    setTimeout( () => {
+      this.dataClientService.addClient(client).subscribe( res => {
+        client.id_user = res.id_user;
+        list.forEach( phone => {
+          this.dataClientService.addPhone(client.id_user, phone.number_phone + '').subscribe( response => {
+              phone.id_phone = response.id_phone;
+            });
+        });
+        this.dataClientService.addClientToList(client);
+
+      });
+    }, 2000);
+    this.showMessage('Cliente', 'Agregar cliente', 'Cliente agregado correctamente');
+    this.modal.dismiss();
+  }
+
   public closeModal(client: ClientModel, form: FormGroup, deleteList: PhoneModel[], list: PhoneModel[]) {
     console.log(form.value);
     client.age_user = form.value.age_user;
     const date =  new Date(form.value.birthdate_user);
     client.birthdate_user = date.toISOString();
     client.document_user = form.value.document_user;
-    console.log('Direccion de correo que llego: ', form.value.email_cuser);
     client.email_cuser = form.value.email_cuser;
     client.first_name = form.value.first_name;
     client.last_name = form.value.last_name;
@@ -107,5 +142,15 @@ export class ClientPage implements OnInit {
       });
     }, 2000);
     this.modal.dismiss();
+  }
+
+  async showMessage(header, subHeader, message){
+    const alert = await this.alertCtrl.create({
+      header,
+      subHeader,
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

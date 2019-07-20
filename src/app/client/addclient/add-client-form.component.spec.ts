@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddclientComponent } from './addclient.component';
+import { AddClientFormComponent } from './add-client-form.component';
 
-describe('AddclientComponent', () => {
-  let component: AddclientComponent;
-  let fixture: ComponentFixture<AddclientComponent>;
+describe('AddClientFormComponent', () => {
+  let component: AddClientFormComponent;
+  let fixture: ComponentFixture<AddClientFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddclientComponent ],
+      declarations: [ AddClientFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddclientComponent);
+    fixture = TestBed.createComponent(AddClientFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

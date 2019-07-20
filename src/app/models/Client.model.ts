@@ -9,7 +9,7 @@ export class ClientModel {
     public birthdate_user?: string;
     public gender_user: string;
     public typeuser: string;
-    public password: string;
-    public nickname: string;
+    public password?: string;
+    public nickname?: string;
     public color?: string;
 }

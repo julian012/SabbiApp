@@ -10,7 +10,7 @@ import {PhoneModel} from '../models/Phone.model';
 })
 export class ClientService {
 
-  public colors = ['1C0B19', '140D4F', '4EA699', '2DD881', '6F3DB7', '2E86AB', 'A23B72', 'F18F01', 'C73E1D', '3B1F2B'];
+  public colors = ['52AA5E', 'F0EC57', '4EA699', '2DD881', '6F3DB7', '2E86AB', 'A23B72', 'F18F01', 'CCFCCB', '23C9FF'];
   public clientList: ClientModel[] = [];
   public list: ClientModel[];
 
@@ -33,6 +33,12 @@ export class ClientService {
           (error: any) => {
       });
     }
+  }
+
+  public addClientToList(client: ClientModel) {
+    client.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+    this.clientList.push(client);
+    this.list = this.clientList;
   }
 
   public filterClients(value: string) {
@@ -86,6 +92,11 @@ export class ClientService {
   // Eliminar telefono
   public deletePhone(phone: PhoneModel): Observable<PhoneModel> {
     return this.http.post<PhoneModel>( HTTP_URL + PHONE_ROUTING + '/delete', phone);
+  }
+
+  //Agregar cliente
+  public addClient(client: ClientModel): Observable<any> {
+    return this.http.post<any>(HTTP_URL + CLIENT_ROUTING, client);
   }
 
 }

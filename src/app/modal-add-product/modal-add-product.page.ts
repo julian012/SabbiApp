@@ -9,7 +9,7 @@ import {PickerModel} from '../models/Picker.model';
 import {GarmentService} from '../garment/garment.service';
 import {GarmentModel} from '../models/Garment.model';
 import {AlertController} from '@ionic/angular';
-import {ERRORMESSAGES, ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
+import { ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
 
 @Component({
     selector: 'app-modal-add-product',
