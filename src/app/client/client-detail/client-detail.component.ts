@@ -147,7 +147,7 @@ export class ClientDetailComponent implements OnInit {
         Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*'),
         Validators.maxLength(25)
       ])),
-      email_cuser : new FormControl(this.dataClientChanges.email_cuser, Validators.email),
+      email_cuser : new FormControl(this.validateEmail(this.dataClientChanges.email_cuser), Validators.email),
       birthdate_user : new FormControl(this.getDateISOFormat(), Validators.minLength(7)),
       age_user : new FormControl(this.dataClientChanges.age_user, Validators.compose([
         Validators.min(15),
@@ -156,6 +156,16 @@ export class ClientDetailComponent implements OnInit {
       gender_user : new FormControl(this.dataClientChanges.gender_user, Validators.required)
     });
   }
+
+  public validateEmail(email?: string) {
+    if (email) {
+      return email;
+    } else {
+      return  '';
+    }
+  }
+
+
 
   public getDateISOFormat() {
     const date = new Date(this.dataClientChanges.birthdate_user);

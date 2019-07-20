@@ -37,6 +37,10 @@ export class AppComponent {
       url: '/sales',
       icon: 'cash'
     }, {
+      title: 'Publicaciones',
+      url: '/post',
+      icon: 'cloud-upload'
+    },{
       title: 'Reportes',
       url: '/reports',
       icon: 'stats'
