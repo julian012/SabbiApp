@@ -6,6 +6,7 @@ import { ClientDetailComponent} from './client-detail/client-detail.component';
 import { IonicModule } from '@ionic/angular';
 
 import { ClientPage } from './client.page';
+import {AddClientFormComponent} from './addclient/add-client-form.component';
 
 const routes: Routes = [
   {
@@ -22,9 +23,9 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         ReactiveFormsModule
     ],
-  declarations: [ClientPage, ClientDetailComponent],
+  declarations: [ClientPage, ClientDetailComponent, AddClientFormComponent],
   entryComponents: [
-      ClientDetailComponent
+      ClientDetailComponent, AddClientFormComponent
   ]
 })
 export class ClientPageModule {}

@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" id="iconsize"></ion-icon>
+    </ion-buttons>
+    <ion-title>
+      Agregar cliente
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="myForm" (ngSubmit)="confirmChange(MESSAGE_CONFIRM_ADD)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Nombres</ion-label>
+            <ion-input formControlName="first_name" type="text" required ></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.first_name">
+              <div class="error-message" *ngIf="myForm.get('first_name').hasError(error.type) && (myForm.get('first_name').dirty || myForm.get('first_name').touched)">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Apellidos</ion-label>
+            <ion-input type="text" formControlName="last_name"></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.last_name">
+              <div class="error-message" *ngIf="myForm.get('last_name').hasError(error.type) && (myForm.get('last_name').dirty || myForm.get('last_name').touched)">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Número de documento</ion-label>
+            <ion-input type="number" formControlName="document_user" maxlength="11" minlength="8"></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.document_user">
+              <div class="error-message" *ngIf="myForm.get('document_user').hasError(error.type) && (myForm.get('document_user').dirty || myForm.get('document_user').touched)">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Correo electronico</ion-label>
+            <ion-input type="email" formControlName="email_cuser" ></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.email_cuser">
+              <div class="error-message" *ngIf="myForm.get('email_cuser').hasError(error.type) && (myForm.get('email_cuser').dirty || myForm.get('email_cuser').touched)">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Edad</ion-label>
+            <ion-input type="number" formControlName="age_user" ></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.age_user">
+              <div class="error-message" *ngIf="myForm.get('age_user').hasError(error.type) && (myForm.get('age_user').dirty || myForm.get('age_user').touched)">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Fecha de nacimiento (DD/MM/YYYY)</ion-label>
+            <ion-datetime displayFormat="DD MM YY" placeholder="Seleccione la fecha" formControlName="birthdate_user" ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label *ngIf="!existPhone()" color="medium" text-center> Sin telefono </ion-label>
+          <ion-item *ngFor="let phone of phoneNumberList">
+            <ion-label position="floating">Numero de telefono</ion-label>
+            <ion-input type="number" [(ngModel)]="phone.number_phone" [ngModelOptions]="{ standalone : true}" max="9999999999"></ion-input>
+            <ion-icon name="close" slot="end" (click)="deletePhone(phone)"></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" offset="4">
+          <ion-button color="warning" (click)="addPhone()">
+            Agregar
+            <ion-icon name="call" slot="start"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label text-center position="floating"> Genero </ion-label>
+          <ion-list>
+            <ion-radio-group formControlName="gender_user">
+              <ion-item slot="start">
+                <ion-icon name="woman" item-start></ion-icon>
+                <ion-label>Mujer</ion-label>
+                <ion-radio value="F"></ion-radio>
+              </ion-item>
+              <ion-item slot="end">
+                <ion-icon name="man" item-start></ion-icon>
+                <ion-label>Hombre</ion-label>
+                <ion-radio value="M"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+        <ion-col size="8" offset="2">
+          <ion-button color="success" [disabled]="!myForm.valid" type="submit">Guardar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

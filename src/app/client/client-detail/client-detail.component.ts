@@ -22,11 +22,10 @@ export class ClientDetailComponent implements OnInit {
   public creationDate: string;
   //public clientPage: ClientPage;
   public dataClientChanges: ClientModel;
-  public phoneClient: PhoneModel[];
-  public phoneClientChanges: PhoneModel[];
+  public phoneClient: PhoneModel[] = [];
+  public phoneClientChanges: PhoneModel[] ;
   public salesClient: SaleModel[];
   public countSales = 0;
-  public havePhones = false;
   public edit = false;
   public myForm: FormGroup;
   public deletePhoneList: PhoneModel[];
@@ -37,13 +36,13 @@ export class ClientDetailComponent implements OnInit {
   constructor(private dataClientService: ClientDetailService,
               public alertCtrl: AlertController,
               public formBuilder: FormBuilder) {
-    //this.dataClient = navParams.get('dataClient');
   }
 
   ngOnInit() {
     this.creationDate = this.getDate(this.dataClient.creation_date);
     this.setPhoneClient();
     this.getClientSales();
+    this.existPhone();
   }
 
   public getDate(date: string) {
@@ -55,8 +54,6 @@ export class ClientDetailComponent implements OnInit {
     this.dataClientService.getPhoneNumber(this.dataClient.id_user).subscribe(res => {
           this.phoneClient = res;
           console.log(this.phoneClient);
-        },
-        (error: any) => {
         });
   }
 
@@ -94,12 +91,9 @@ export class ClientDetailComponent implements OnInit {
   }
 
   public existPhone() {
-    if (this.phoneClient.length > 0) {
-      this.havePhones = true;
-    } else {
-      this.havePhones = false;
-    }
+    return (this.phoneClient.length > 0);
   }
+
 
   public loadEditClient() {
     this.edit = !this.edit;
@@ -168,7 +162,6 @@ export class ClientDetailComponent implements OnInit {
     console.log('La fecha que llego es: ', this.dataClientChanges.birthdate_user);
     console.log('resultado: ', date.toISOString());
     return date.toISOString();
-    //return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
   }
 
   public addPhone() {
@@ -208,7 +201,7 @@ export class ClientDetailComponent implements OnInit {
     console.log(this.myForm.value);
     console.log('Numeros a borrar', this.deletePhoneList);
     console.log('Numeros a agregar', this.phoneClientChanges);
-    this.clientPage.closeModal(this.dataClient,this.myForm, this.deletePhoneList, this.phoneClientChanges);
+    this.clientPage.closeModal(this.dataClient, this.myForm, this.deletePhoneList, this.phoneClientChanges);
   }
 
 }
