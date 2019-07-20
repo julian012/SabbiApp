@@ -3,6 +3,10 @@ import { ClientService } from './client.service';
 import {ClientModel} from '../models/Client.model';
 import { ModalController} from '@ionic/angular';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
+import {FormGroup} from '@angular/forms';
+import {PhoneModel} from '../models/Phone.model';
+import {compilePipeFromMetadata} from '@angular/compiler';
+import {PlatformModel} from '../models/Platform.model';
 
 @Component({
   selector: 'app-client',
@@ -37,14 +41,62 @@ export class ClientPage implements OnInit {
     const modal = await this.modal.create({
       component : ClientDetailComponent,
       componentProps : {
-        dataClient : info
+        dataClient : info,
+        clientPage : this
       },
       cssClass : 'modalClientInfo'
     });
-    return await modal.present();
+    await modal.present();
   }
 
-  public getIconClient(client : ClientModel) {
+  public getIconClient(client: ClientModel) {
     return this.dataClientService.getIconClient(client);
+  }
+
+  public closeModal(client: ClientModel, form: FormGroup, deleteList: PhoneModel[], list: PhoneModel[]) {
+    console.log(form.value);
+    client.age_user = form.value.age_user;
+    const date =  new Date(form.value.birthdate_user);
+    client.birthdate_user = date.toISOString();
+    client.document_user = form.value.document_user;
+    console.log('Direccion de correo que llego: ', form.value.email_cuser);
+    client.email_cuser = form.value.email_cuser;
+    client.first_name = form.value.first_name;
+    client.last_name = form.value.last_name;
+    client.gender_user = form.value.gender_user;
+    setTimeout( () => {
+      this.list.forEach( i => {
+        if (i.id_user === client.id_user) {
+          i = client;
+          this.dataClientService.updateClient(i).subscribe(res => {
+                console.log('Se actualizo correctamente');
+              },
+              (error: any) => {
+              console.log(error.message);
+              }
+          );
+        }
+      });
+      list.forEach( phone => {
+        // SI EXISTIA SE IBA ERA A MODIFICAR
+        if (phone.id_phone) {
+          this.dataClientService.updatePhone(phone).subscribe( res => {
+            console.log('Modificado correctamente');
+          });
+        } else { // En este caso se va a agregar
+          this.dataClientService.addPhone(client.id_user, phone.number_phone + '').subscribe( res => {
+            phone.id_phone = res.id_phone;
+          });
+        }
+      });
+      deleteList.forEach( phone => {
+        if (phone.id_phone) {
+          this.dataClientService.deletePhone(phone).subscribe( res => {
+            console.log('Eliminado correctamente');
+          });
+        }
+      });
+    }, 2000);
+    this.modal.dismiss();
   }
 }

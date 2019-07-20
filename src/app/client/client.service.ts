@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ClientModel} from '../models/Client.model';
-import {HTTP_URL} from '../models/httpStatus';
+import {HTTP_URL, CLIENT_ROUTING, PHONE_ROUTING} from '../models/httpStatus';
+import {PhoneModel} from '../models/Phone.model';
 
 @Injectable({
   providedIn: 'root'
@@ -59,4 +60,32 @@ export class ClientService {
     const alternative = `https://ui-avatars.com/api/?background=${client.color}&size=64&color=fff&bold=true&rounded=true&name=${res}`;
     return alternative;
   }
+
+  // Actualizar los datos del cliente
+  public updateClient(client: ClientModel): Observable<ClientModel> {
+    this.clientList.forEach( i => {
+      if (i.id_user === client.id_user) {
+        i = client;
+        console.log('Se encontro, ahora se va a realizar el cambio');
+        return this.http.put<ClientModel>( HTTP_URL + CLIENT_ROUTING, i);
+      }
+    });
+    return  this.http.put<ClientModel>( HTTP_URL + CLIENT_ROUTING, client);
+  }
+
+  // Agregar telefono
+  public addPhone(id_user: number, number_phone: string): Observable<PhoneModel> {
+    return this.http.post<PhoneModel>( HTTP_URL + PHONE_ROUTING, { id_user, number_phone });
+  }
+
+  // Modificar telefono
+  public updatePhone(phone: PhoneModel): Observable<PhoneModel> {
+    return this.http.put<PhoneModel>( HTTP_URL + PHONE_ROUTING + CLIENT_ROUTING, phone);
+  }
+
+  // Eliminar telefono
+  public deletePhone(phone: PhoneModel): Observable<PhoneModel> {
+    return this.http.post<PhoneModel>( HTTP_URL + PHONE_ROUTING + '/delete', phone);
+  }
+
 }

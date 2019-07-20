@@ -22,7 +22,7 @@
               Identificación: {{dataClient.document_user}}
             </ion-item>
             <ion-item lines="none">
-              Fecha de creación: {{ getDate(dataClient.creation_date)}}
+              Fecha de creación: {{ creationDate }}
             </ion-item>
           </ion-list>
         </ion-col>
@@ -38,10 +38,10 @@
           </ion-item>
           <ion-item >
             <ion-icon name="call" slot="start"></ion-icon>
-            <ion-list >
+            <ion-list>
               <ion-item *ngFor="let phone of phoneClient" lines="none" id="phoneList">{{phone.number_phone}}</ion-item>
             </ion-list>
-            <ion-label *ngIf="!existPhone()" color="medium"> Sin telefono </ion-label>
+            <ion-label *ngIf="!this.havePhones" color="medium"> Sin telefono </ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-icon name="calendar" slot="start"></ion-icon>
@@ -55,7 +55,7 @@
         <ion-label>Compras realizadas:</ion-label>
       </ion-col>
       <ion-col size="4">
-        <ion-label>{{ salesClient.length }}</ion-label>
+        <ion-label>{{ countSales }}</ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -72,7 +72,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content  *ngIf="edit">
-    <form [formGroup]="myForm">
+    <form [formGroup]="myForm" (ngSubmit)="confirmChange(MESSAGE_CONFIRM_UPDATE)">
       <ion-grid>
         <ion-row>
           <ion-col size="12">
@@ -117,7 +117,7 @@
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating">Correo electronico</ion-label>
-              <ion-input type="text" formControlName="email_cuser" ></ion-input>
+              <ion-input type="email" formControlName="email_cuser" ></ion-input>
             </ion-item>
             <div class="error-messages">
               <ng-container *ngFor="let error of errorMessages.email_cuser">

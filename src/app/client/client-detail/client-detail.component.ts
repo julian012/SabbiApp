@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ClientModel} from '../../models/Client.model';
 import {PhoneModel} from '../../models/Phone.model';
 import { ClientDetailService } from './client-detail.service';
 import {SaleModel} from '../../models/Sale.model';
 import {AlertController} from '@ionic/angular';
-import {FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {ERRORMESSAGES} from '../../models/httpStatus';
+import {ClientPage} from '../client.page';
 
 @Component({
   selector: 'app-client-detail',
@@ -16,36 +17,44 @@ export class ClientDetailComponent implements OnInit {
 
   public MESSAGE_CONFIRM_EDIT = '¿Seguro desea modificar la información del cliente?';
   public MESSAGE_CONFIRM_COMEBACK = '¿Desea volver sin guardar cambios?';
-  public dataClient: ClientModel;
+  public MESSAGE_CONFIRM_UPDATE = 'Los datos del cliente van a ser modificados, ¿Desea continuar?';
+  //public dataClient: ClientModel;
+  public creationDate: string;
+  //public clientPage: ClientPage;
   public dataClientChanges: ClientModel;
   public phoneClient: PhoneModel[];
   public phoneClientChanges: PhoneModel[];
   public salesClient: SaleModel[];
+  public countSales = 0;
+  public havePhones = false;
   public edit = false;
   public myForm: FormGroup;
   public deletePhoneList: PhoneModel[];
   public errorMessages = ERRORMESSAGES;
-  public first_name: AbstractControl;
-  public last_name: AbstractControl;
-  public document_user: AbstractControl;
 
+  @Input() dataClient: ClientModel;
+  @Input() clientPage: ClientPage;
   constructor(private dataClientService: ClientDetailService,
               public alertCtrl: AlertController,
-              public formBuilder: FormBuilder) { }
+              public formBuilder: FormBuilder) {
+    //this.dataClient = navParams.get('dataClient');
+  }
 
   ngOnInit() {
+    this.creationDate = this.getDate(this.dataClient.creation_date);
     this.setPhoneClient();
     this.getClientSales();
   }
 
   public getDate(date: string) {
     const newDate = new Date(date);
-    return `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
+    return `${newDate.getDate()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
   }
 
   public setPhoneClient() {
     this.dataClientService.getPhoneNumber(this.dataClient.id_user).subscribe(res => {
           this.phoneClient = res;
+          console.log(this.phoneClient);
         },
         (error: any) => {
         });
@@ -54,6 +63,7 @@ export class ClientDetailComponent implements OnInit {
   public getClientSales() {
     this.dataClientService.getSales(this.dataClient.id_user).subscribe(res => {
           this.salesClient = res;
+          this.countSales = this.salesClient.length;
         },
         (error: any) => {
         });
@@ -84,7 +94,11 @@ export class ClientDetailComponent implements OnInit {
   }
 
   public existPhone() {
-    return this.phoneClient.length > 0;
+    if (this.phoneClient.length > 0) {
+      this.havePhones = true;
+    } else {
+      this.havePhones = false;
+    }
   }
 
   public loadEditClient() {
@@ -119,9 +133,7 @@ export class ClientDetailComponent implements OnInit {
         }
       ]
     });
-
     await alert.present();
-
   }
 
   public createMyForm() {
@@ -141,9 +153,7 @@ export class ClientDetailComponent implements OnInit {
         Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*'),
         Validators.maxLength(25)
       ])),
-      email_cuser : new FormControl(this.dataClientChanges.email_cuser, Validators.compose([
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
+      email_cuser : new FormControl(this.dataClientChanges.email_cuser, Validators.email),
       birthdate_user : new FormControl(this.getDateISOFormat(), Validators.minLength(7)),
       age_user : new FormControl(this.dataClientChanges.age_user, Validators.compose([
         Validators.min(15),
@@ -155,7 +165,10 @@ export class ClientDetailComponent implements OnInit {
 
   public getDateISOFormat() {
     const date = new Date(this.dataClientChanges.birthdate_user);
-    return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
+    console.log('La fecha que llego es: ', this.dataClientChanges.birthdate_user);
+    console.log('resultado: ', date.toISOString());
+    return date.toISOString();
+    //return date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
   }
 
   public addPhone() {
@@ -169,6 +182,33 @@ export class ClientDetailComponent implements OnInit {
         this.phoneClientChanges.splice(i, 1);
       }
     }
+  }
+
+  async confirmChange(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmación',
+      message,
+      cssClass: 'options-as-platforms',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        }, {
+          text: 'Continuar',
+          handler: () => {
+            this.updateData();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  public updateData() {
+    console.log(this.myForm.value);
+    console.log('Numeros a borrar', this.deletePhoneList);
+    console.log('Numeros a agregar', this.phoneClientChanges);
+    this.clientPage.closeModal(this.dataClient,this.myForm, this.deletePhoneList, this.phoneClientChanges);
   }
 
 }
