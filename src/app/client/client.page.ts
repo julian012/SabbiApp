@@ -7,6 +7,7 @@ import {FormGroup} from '@angular/forms';
 import {PhoneModel} from '../models/Phone.model';
 import {compilePipeFromMetadata} from '@angular/compiler';
 import {PlatformModel} from '../models/Platform.model';
+import {AddclientComponent} from './addclient/addclient.component';
 
 @Component({
   selector: 'app-client',
@@ -44,6 +45,14 @@ export class ClientPage implements OnInit {
         dataClient : info,
         clientPage : this
       },
+      cssClass : 'modalClientInfo'
+    });
+    await modal.present();
+  }
+
+  async addClient() {
+    const modal = await this.modal.create({
+      component : AddclientComponent,
       cssClass : 'modalClientInfo'
     });
     await modal.present();
