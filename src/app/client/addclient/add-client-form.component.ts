@@ -23,7 +23,6 @@ export class AddClientFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               public alertCtrl: AlertController) {
-    this.addPhone();
     this.createMyForm();
   }
 
