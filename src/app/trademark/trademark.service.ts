@@ -31,6 +31,19 @@ export class TrademarkService {
         return this.http.get<TrademarkModel[]>(HTTP_URL + '/trademark');
     }
 
+    public createTrademark(trademark: TrademarkModel): Observable<TrademarkModel> {
+        console.log(trademark);
+        return this.http.post<TrademarkModel>(HTTP_URL + '/trademark', trademark);
+    }
+
+    public deleteTrademark(trademark: TrademarkModel): Observable<TrademarkModel> {
+        return this.http.post<TrademarkModel>(HTTP_URL + '/trademark/delete', trademark);
+    }
+
+    public updateTrademark(trademark: TrademarkModel): Observable<TrademarkModel> {
+        return this.http.put<TrademarkModel>(HTTP_URL + '/trademark', trademark);
+    }
+
     public getTrademarks(): TrademarkModel[] {
         return this.trademarkList;
     }
