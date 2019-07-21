@@ -36,11 +36,11 @@ export class GarmentService {
         return this.http.post<GarmentModel>(HTTP_URL + '/garment', garment);
     }
 
-    public deleteTrademark(garment: GarmentModel): Observable<GarmentModel> {
+    public deleteGarment(garment: GarmentModel): Observable<GarmentModel> {
         return this.http.post<GarmentModel>(HTTP_URL + '/garment/delete', garment);
     }
 
-    public updateTrademark(garment: GarmentModel): Observable<GarmentModel> {
+    public updateGarment(garment: GarmentModel): Observable<GarmentModel> {
         return this.http.put<GarmentModel>(HTTP_URL + '/garment', garment);
     }
 

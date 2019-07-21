@@ -88,7 +88,7 @@ export class TrademarkPage implements OnInit {
     async changeTrademarkName(trademark: TrademarkModel) {
         const prompt = await this.alertCtrl.create({
             header: 'Modificar Marca',
-            message: 'Ingrese el nombre de la plataforma. Tenga en cuenta que si el nombre cambia,' +
+            message: 'Ingrese el nombre de la marca. Tenga en cuenta que si el nombre cambia,' +
                 ' se va a ver reflejado tambien en los reportes',
             inputs: [
                 {
@@ -133,7 +133,7 @@ export class TrademarkPage implements OnInit {
     async showMessage(messageHeader, messageSubHeader, messageDialog) {
         const alert = await this.alertCtrl.create({
             header: 'Mensaje',
-            subHeader: 'Agregando plataforma',
+            subHeader: 'Agregando marca',
             message: messageDialog,
             buttons: ['OK']
         });
@@ -145,7 +145,7 @@ export class TrademarkPage implements OnInit {
     //     return "https://ui-avatars.com/api/?name=" + name ;
     // }
     //
-    async deletePlatform(trademark: TrademarkModel) {
+    async deleteTrademark(trademark: TrademarkModel) {
         const alert = await this.alertCtrl.create({
             header: 'Confirmación',
             message: `¿Seguro desea eliminar la marca ${trademark.name_trademark}?`,
@@ -158,13 +158,12 @@ export class TrademarkPage implements OnInit {
                     text: 'Continuar',
                     handler: () => {
                         this.trademarkService.deleteTrademark(trademark).subscribe(res => {
+                            this.loadTrademark();
                             this.showMessage('Mensaje', 'Eliminando marca', 'Marca eliminada correctamente');
                             this.saveTrademarkLoading();
-                            this.loadTrademark();
                         }, (error) => {
                             this.showMessage('Error', 'Eliminando marca',
-                                'No se puede eliminar la plataforma, debido a que ya fue asignada a una venta. ' +
-                                'En tal caso de no usarla más, la puede desactivar');
+                                'No se puede eliminar la marca, por un problema en la conexión.');
                         });
                     }
                 }
@@ -173,7 +172,7 @@ export class TrademarkPage implements OnInit {
         await alert.present();
     }
 
-    async optionsInPlatforms(trademark: TrademarkModel) {
+    async optionsInTrademarks(trademark: TrademarkModel) {
         const actionSheet = await this.actionSheetCtrl.create({
             header: trademark.name_trademark,
             buttons: [{
@@ -181,7 +180,7 @@ export class TrademarkPage implements OnInit {
                 icon: 'close-circle',
                 cssClass: 'danger',
                 handler: () => {
-                    this.deletePlatform(trademark);
+                    this.deleteTrademark(trademark);
                 }
             }, {
                 text: 'Cambiar nombre',
