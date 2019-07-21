@@ -29,7 +29,7 @@ export const ERRORMESSAGES = {
     ], document_user: [
         {type: 'required', message: 'Campo obligatorio'},
         {type: 'max', message: 'La longitud del documento no debe superar los 11 caracteres'},
-        {type: 'min', message: 'La longitud del codumento no debe ser menor a los 8 caracteres'}
+        {type: 'min', message: 'La longitud del codumento no debe ser menor a 7 caracteres'}
     ]
 };
 

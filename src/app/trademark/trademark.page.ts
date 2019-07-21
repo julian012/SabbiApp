@@ -37,13 +37,13 @@ export class TrademarkPage implements OnInit {
         if (this.dataTrademark.find(x => x.name_trademark.toUpperCase() === data.toUpperCase())) {
             this.showMessage(this.MESSAGE_TRADEMARK_EXIST);
         } else {
-            this.trademarkService.createTrademark(trademark).subscribe( res => {
+           /* this.trademarkService.createTrademark(trademark).subscribe( res => {
                 console.log(res);
                 this.loadTrademark();
                 this.showMessage(this.MESSAGE_TRADEMARK_ADDED);
             }, (error) => {
                 this.showMessage(this.MESSAGE_TRADEMARK_CONN);
-            });
+            });*/
         }
     }
 

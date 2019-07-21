@@ -135,7 +135,7 @@ export class ClientDetailComponent implements OnInit {
       document_user : new FormControl(this.dataClientChanges.document_user, Validators.compose([
         Validators.required,
         Validators.max(99999999999),
-        Validators.min(10000000)
+        Validators.min(1000000)
       ])),
       first_name : new FormControl(this.dataClientChanges.first_name, Validators.compose([
           Validators.required,

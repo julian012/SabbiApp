@@ -45,7 +45,7 @@ export class AddClientFormComponent implements OnInit {
       document_user : new FormControl('', Validators.compose([
         Validators.required,
         Validators.max(99999999999),
-        Validators.min(10000000)
+        Validators.min(1000000)
       ])),
       first_name : new FormControl('', Validators.compose([
         Validators.required,
