@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 import {LoadingController} from '@ionic/angular';
 import {TrademarkModel} from '../models/Trademark.model';
 import {TrademarkService} from './trademark.service';
@@ -35,14 +35,14 @@ export class TrademarkPage implements OnInit {
         trademark.name_trademark = data;
         trademark.id_trademark = -1;
         if (this.dataTrademark.find(x => x.name_trademark.toUpperCase() === data.toUpperCase())) {
-            this.showMessage('Mensaje', 'Agregando marca', this.MESSAGE_TRADEMARK_EXIST);
+            this.showMessage('Mensaje', 'Agregar marca', this.MESSAGE_TRADEMARK_EXIST);
         } else {
             this.trademarkService.createTrademark(trademark).subscribe(res => {
                 console.log(res);
                 this.loadTrademark();
-                this.showMessage('Mensaje', 'Agregando marca', this.MESSAGE_TRADEMARK_ADDED);
+                this.showMessage('Mensaje', 'Agregar marca', this.MESSAGE_TRADEMARK_ADDED);
             }, (error) => {
-                this.showMessage('Mensaje', 'Agregando marca', this.MESSAGE_TRADEMARK_CONN);
+                this.showMessage('Mensaje', 'Agregar marca', this.MESSAGE_TRADEMARK_CONN);
             });
         }
     }
@@ -93,7 +93,7 @@ export class TrademarkPage implements OnInit {
             inputs: [
                 {
                     name: 'title',
-                    placeholder: 'Nombre'
+                    placeholder: trademark.name_trademark
                 },
             ],
             buttons: [
@@ -106,20 +106,28 @@ export class TrademarkPage implements OnInit {
                 {
                     text: 'Modificar',
                     handler: data => {
-                        trademark.name_trademark = data.title;
-                        this.trademarkService.updateTrademark(trademark).subscribe((res) => {
-                            this.saveTrademarkLoading();
-                            this.showMessage('Mensaje', 'Modificar marca', 'Nombre de la marca modificada correctamente');
-                        }, (error) => {
-                            this.saveTrademarkLoading();
-                            this.showMessage('Mensaje', 'Modificar marca', 'Nombre de la marca ' +
-                                'no se pudo modificar. Verifique que no se repite con ya alguno guardado.');
-                        });
+                        this.saveTrademark(trademark, data.title);
                     }
                 }
             ]
         });
         await prompt.present();
+    }
+
+    saveTrademark(trademark: TrademarkModel, title: string) {
+        if (this.dataTrademark.find(x => x.name_trademark.toUpperCase() === title.toUpperCase())) {
+            this.showMessage('Mensaje', 'Modificar marca', this.MESSAGE_TRADEMARK_EXIST);
+        } else {
+            trademark.name_trademark = title;
+            this.trademarkService.updateTrademark(trademark).subscribe((res) => {
+                this.saveTrademarkLoading();
+                this.showMessage('Mensaje', 'Modificar marca', 'Nombre de la marca modificada correctamente');
+            }, (error) => {
+                this.saveTrademarkLoading();
+                this.showMessage('Mensaje', 'Modificar marca', 'Nombre de la marca ' +
+                    'no se pudo modificar. Error en la conexión.');
+            });
+        }
     }
 
     async showMessage(messageHeader, messageSubHeader, messageDialog) {
@@ -146,7 +154,6 @@ export class TrademarkPage implements OnInit {
                 {
                     text: 'Cancelar',
                     role: 'cancel',
-
                 }, {
                     text: 'Continuar',
                     handler: () => {
@@ -155,7 +162,7 @@ export class TrademarkPage implements OnInit {
                             this.saveTrademarkLoading();
                             this.loadTrademark();
                         }, (error) => {
-                            this.showMessage('Error', 'Eliminando plataforma',
+                            this.showMessage('Error', 'Eliminando marca',
                                 'No se puede eliminar la plataforma, debido a que ya fue asignada a una venta. ' +
                                 'En tal caso de no usarla más, la puede desactivar');
                         });
