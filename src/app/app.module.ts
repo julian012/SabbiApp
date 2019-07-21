@@ -10,9 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.service';
 import { ReactiveFormsModule} from '@angular/forms';
-import { Camera } from '@ionic-native/camera/ngx';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 
 @NgModule({
@@ -30,10 +27,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     SplashScreen,
     HttpClient,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
-    Camera,
-    ImagePicker,
-    PhotoViewer,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig }
   ],
   bootstrap: [AppComponent]
 })

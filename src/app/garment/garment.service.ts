@@ -31,6 +31,19 @@ export class GarmentService {
         return this.http.get<GarmentModel[]>(HTTP_URL + '/garment');
     }
 
+    public createGarment(garment: GarmentModel): Observable<GarmentModel> {
+        console.log(garment);
+        return this.http.post<GarmentModel>(HTTP_URL + '/garment', garment);
+    }
+
+    public deleteGarment(garment: GarmentModel): Observable<GarmentModel> {
+        return this.http.post<GarmentModel>(HTTP_URL + '/garment/delete', garment);
+    }
+
+    public updateGarment(garment: GarmentModel): Observable<GarmentModel> {
+        return this.http.put<GarmentModel>(HTTP_URL + '/garment', garment);
+    }
+
     public getGarmentList(): GarmentModel[] {
         return this.garmentList;
     }

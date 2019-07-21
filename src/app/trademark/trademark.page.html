@@ -11,10 +11,7 @@
 
 <ion-content>
     <ion-list>
-<!--        <ion-list-header class="header-list" color="danger">-->
-<!--            Marcas-->
-<!--        </ion-list-header>-->
-        <ion-item *ngFor="let trademark of dataTrademark" [class]="trademark.id_trademark">
+        <ion-item *ngFor="let trademark of dataTrademark" [class]="trademark.id_trademark" (press)="optionsInTrademarks(trademark)">
             <ion-thumbnail slot="end">
                 <ion-img [src]="trademark.path"></ion-img>
             </ion-thumbnail>
@@ -23,7 +20,7 @@
     </ion-list>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
-            <ion-icon name="md-add"></ion-icon>
+            <ion-icon  name="md-add" (click)="showPrompt()"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 </ion-content>
