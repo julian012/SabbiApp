@@ -5,8 +5,6 @@ import {AlertController, ModalController} from '@ionic/angular';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
 import {FormGroup} from '@angular/forms';
 import {PhoneModel} from '../models/Phone.model';
-import {compilePipeFromMetadata} from '@angular/compiler';
-import {PlatformModel} from '../models/Platform.model';
 import {AddClientFormComponent} from './addclient/add-client-form.component';
 
 @Component({
@@ -144,7 +142,7 @@ export class ClientPage implements OnInit {
     this.modal.dismiss();
   }
 
-  async showMessage(header, subHeader, message){
+  async showMessage(header, subHeader, message) {
     const alert = await this.alertCtrl.create({
       header,
       subHeader,

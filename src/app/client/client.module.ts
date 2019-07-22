@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ClientPage } from './client.page';
 import {AddClientFormComponent} from './addclient/add-client-form.component';
+import {ReportPage} from '../report/report.page';
 
 const routes: Routes = [
   {

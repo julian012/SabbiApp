@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title >Detalles de la Compra</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-title> Plataforma: WhatsApp</ion-title>
+      <ion-card-subtitle> Fecha de compra: {{getDate(saleInfo[0].sale_date)}} </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-grid>
+        <div *ngFor="let sale of saleInfo" class="ion-text-center">
+          <ion-row>
+            <ion-col size="12" id="result" class="col"> Referencia</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" class="col"> {{sale.name_garment}} {{sale.name_product}} {{sale.name_trademark}} talla {{sale.size_product}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4" id="result" class="col">Cantidad</ion-col>
+            <ion-col size="4" id="result" class="col">Valor</ion-col>
+            <ion-col size="4" id="result" class="col">Total</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4" class="col">{{sale.quantity}}</ion-col>
+            <ion-col size="4" class="col">${{sale.price_product}}</ion-col>
+            <ion-col size="4" class="col">${{sale.price_product * sale.quantity}}</ion-col>
+          </ion-row><br>
+        </div>
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <ion-button color="success">Ver factura de compra</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
