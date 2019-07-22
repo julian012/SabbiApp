@@ -32,12 +32,16 @@ export class PlatformsService {
     public validateUrlImagePlatform(name: string) {
         let path = 'https://logo.clearbit.com/';
         let alternative = 'https://ui-avatars.com/api/?name=';
-        this.http.get(path + name).subscribe(res => {
-                return path + name;
+        this.http.head(path + name).subscribe(res => {
+                return path + name + '.com';
             },
             (error: any) => {
                 return alternative + name;
             }
         );
+    }
+
+    public getInfoPlatform (id_platform: number): Observable<any> {
+        return this.http.post<any>(HTTP_URL + '/platform' + '/info', {id_platform});
     }
 }

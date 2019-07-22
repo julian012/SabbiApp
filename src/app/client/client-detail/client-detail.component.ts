@@ -3,10 +3,14 @@ import {ClientModel} from '../../models/Client.model';
 import {PhoneModel} from '../../models/Phone.model';
 import { ClientDetailService } from './client-detail.service';
 import {SaleModel} from '../../models/Sale.model';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {ERRORMESSAGES} from '../../models/httpStatus';
 import {ClientPage} from '../client.page';
+import { PlatformsService } from '../../platforms/platforms.service';
+import {ReportService} from '../../report/report.service';
+import {SaleDescriptionModel} from '../../models/SaleDescription.model';
+import {ReportPage} from '../../report/report.page';
 
 @Component({
   selector: 'app-client-detail',
@@ -18,9 +22,7 @@ export class ClientDetailComponent implements OnInit {
   public MESSAGE_CONFIRM_EDIT = '¿Seguro desea modificar la información del cliente?';
   public MESSAGE_CONFIRM_COMEBACK = '¿Desea volver sin guardar cambios?';
   public MESSAGE_CONFIRM_UPDATE = 'Los datos del cliente van a ser modificados, ¿Desea continuar?';
-  //public dataClient: ClientModel;
   public creationDate: string;
-  //public clientPage: ClientPage;
   public dataClientChanges: ClientModel;
   public phoneClient: PhoneModel[] = [];
   public phoneClientChanges: PhoneModel[] ;
@@ -30,12 +32,17 @@ export class ClientDetailComponent implements OnInit {
   public myForm: FormGroup;
   public deletePhoneList: PhoneModel[];
   public errorMessages = ERRORMESSAGES;
+  public pathImage = new Map();
+  public result: SaleDescriptionModel[];
 
   @Input() dataClient: ClientModel;
   @Input() clientPage: ClientPage;
   constructor(private dataClientService: ClientDetailService,
               public alertCtrl: AlertController,
-              public formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder,
+              private dataPlatformService: PlatformsService,
+              private dataReportService: ReportService,
+              private modalSale: ModalController) {
   }
 
   ngOnInit() {
@@ -43,6 +50,8 @@ export class ClientDetailComponent implements OnInit {
     this.setPhoneClient();
     this.getClientSales();
     this.existPhone();
+
+
   }
 
   public getDate(date: string) {
@@ -61,6 +70,9 @@ export class ClientDetailComponent implements OnInit {
     this.dataClientService.getSales(this.dataClient.id_user).subscribe(res => {
           this.salesClient = res;
           this.countSales = this.salesClient.length;
+          this.salesClient.forEach( sales => {
+            this.getPhotoPlatform(sales.id_platform);
+          });
         },
         (error: any) => {
         });
@@ -214,4 +226,29 @@ export class ClientDetailComponent implements OnInit {
     this.clientPage.closeModal(this.dataClient, this.myForm, this.deletePhoneList, this.phoneClientChanges);
   }
 
+  public getPhotoPlatform(id_platform: number) {
+    this.dataPlatformService.getInfoPlatform(id_platform).subscribe( res => {
+      this.pathImage.set(id_platform, res.name_platform);
+    });
+  }
+  //Modal para ver la descripción de la venta
+  async showSale() {
+    const modalS = await this.modalSale.create({
+      component : ReportPage,
+      cssClass : 'modalSaleInfo',
+      componentProps : {
+        saleInfo : this.result
+      },
+    });
+    await modalS.present();
+  }
+
+  public showModal(id_sale: number) {
+    this.dataReportService.getDescriptionSale(id_sale).subscribe( res => {
+      this.result = res;
+      this.showSale();
+    });
+  }
 }
+
+

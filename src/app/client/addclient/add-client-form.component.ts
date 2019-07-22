@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ClientModel} from '../../models/Client.model';
 import {PhoneModel} from '../../models/Phone.model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ERRORMESSAGES} from '../../models/httpStatus';
