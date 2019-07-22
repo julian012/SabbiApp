@@ -12,137 +12,150 @@
         <ion-row>
             <ion-col offset="1" size="10">
                 <form [formGroup]="productForm">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-slides pager="true">
-                                <ion-slide *ngIf="map.size === 0">
-                                    <img class="image-products"
-                                         src="https://image.flaticon.com/icons/svg/1524/1524855.svg"
-                                         alt="Producto"/>
-                                </ion-slide>
-                                <ion-slide *ngFor="let img of map | keyvalue">
-                                    <ion-img class="image-products"
-                                             [id]="img.key" [src]="img.value"
-                                             (click)="zoomPhoto(img.value)" (press)="showDeleteAlert(img.key)"
-                                             alt="Producto"></ion-img>
-                                </ion-slide>
-                            </ion-slides>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col offset="4">
-                                <ion-button size="default" fill="solid" shape="round"
-                                            (click)="presentPhotoOptions()">
-                                    <ion-icon name="camera"></ion-icon>
-                                </ion-button>
-                            </ion-col>
-                        </ion-row>
-                        <ion-item>
-                            <ion-label class="label-form" position="floating">Nombre del producto</ion-label>
-                            <ion-input formControlName="name" type="text"></ion-input>
-                        </ion-item>
-                        <ion-row>
+                    <ion-row>
+                        <ion-slides pager="true">
+                            <ion-slide *ngIf="map.size === 0">
+                                <img class="image-products"
+                                     src="https://image.flaticon.com/icons/svg/1524/1524855.svg"
+                                     alt="Producto"/>
+                            </ion-slide>
+                            <ion-slide *ngFor="let img of map | keyvalue">
+                                <ion-img class="image-products"
+                                         [id]="img.key" [src]="img.value"
+                                         (click)="zoomPhoto(img.value)" (press)="showDeleteAlert(img.key)"
+                                         alt="Producto"></ion-img>
+                            </ion-slide>
+                        </ion-slides>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col offset="4">
+                            <ion-button size="default" fill="solid" shape="round"
+                                        (click)="presentPhotoOptions()">
+                                <ion-icon name="camera"></ion-icon>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                    <ion-item>
+                        <ion-label class="label-form" position="floating">Nombre del producto</ion-label>
+                        <ion-input formControlName="name" type="text"></ion-input>
+                    </ion-item>
+                    <ion-row>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of errorMessages.name">
+                                <div class="error-message"
+                                     *ngIf="productForm.get('name').hasError(error.type) && (productForm.get('name').dirty || productForm.get('name').touched)">
+                                    {{error.message}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ion-row>
+                    <ion-item>
+                        <ion-label class="label-form" position="floating">Cantidad</ion-label>
+                        <ion-input type="number" formControlName="quantity"></ion-input>
+                    </ion-item>
+                    <ion-row>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of errorMessages.quantity">
+                                <div class="error-message"
+                                     *ngIf="productForm.get('quantity').hasError(error.type) && (productForm.get('quantity').dirty || productForm.get('quantity').touched)">
+                                    {{error.message}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="label-form" position="floating">Precio</ion-label>
+                                <ion-input type="number" formControlName="price"></ion-input>
+                            </ion-item>
                             <div class="error-messages">
-                                <ng-container *ngFor="let error of errorMessages.name">
+                                <ng-container *ngFor="let error of errorMessages.price">
                                     <div class="error-message"
-                                         *ngIf="productForm.get('name').hasError(error.type) && (productForm.get('name').dirty || productForm.get('name').touched)">
+                                         *ngIf="productForm.get('price').hasError(error.type) && (productForm.get('price').dirty || productForm.get('price').touched)">
                                         {{error.message}}
                                     </div>
                                 </ng-container>
                             </div>
-                        </ion-row>
-                        <ion-item>
-                            <ion-label class="label-form" position="floating">Cantidad</ion-label>
-                            <ion-input type="number" formControlName="quantity"></ion-input>
-                        </ion-item>
-                        <ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col text-center size="3">
+                            <br>
+                            <ion-label>Utilidad</ion-label>
+                        </ion-col>
+                        <ion-range min="0" max="100" step="10" snaps="true" ticks="false" color="success"
+                                   [(ngModel)]="dataProduct.utility_product"
+                                   [ngModelOptions]="{standalone: true}"></ion-range>
+                        <ion-input color="medium" disabled="true">{{ dataProduct.utility_product }}%</ion-input>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="label-form" position="floating">Talla</ion-label>
+                                <ion-input type="text" formControlName="size"></ion-input>
+                            </ion-item>
                             <div class="error-messages">
-                                <ng-container *ngFor="let error of errorMessages.quantity">
+                                <ng-container *ngFor="let error of errorMessages.size">
                                     <div class="error-message"
-                                         *ngIf="productForm.get('quantity').hasError(error.type) && (productForm.get('quantity').dirty || productForm.get('quantity').touched)">
+                                         *ngIf="productForm.get('size').hasError(error.type) && (productForm.get('size').dirty || productForm.get('size').touched)">
                                         {{error.message}}
                                     </div>
                                 </ng-container>
                             </div>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label class="label-form">Género</ion-label>
+                            <ion-radio-group formControlName="gender">
                                 <ion-item>
-                                    <ion-label class="label-form" position="floating">Precio</ion-label>
-                                    <ion-input type="number" formControlName="price">
-                                    </ion-input>
+                                    <ion-icon name="woman"></ion-icon>
+                                    <ion-label>Femenino</ion-label>
+                                    <ion-radio value="F"></ion-radio>
                                 </ion-item>
-                                <div class="error-messages">
-                                    <ng-container *ngFor="let error of errorMessages.price">
-                                        <div class="error-message"
-                                             *ngIf="productForm.get('price').hasError(error.type) && (productForm.get('price').dirty || productForm.get('price').touched)">
-                                            {{error.message}}
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </ion-col>
-                            <ion-col>
                                 <ion-item>
-                                    <ion-label class="label-form" position="floating">Precio de venta</ion-label>
-                                    <ion-input type="number" formControlName="salePrice"></ion-input>
+                                    <ion-icon name="man"></ion-icon>
+                                    <ion-label>Masculino</ion-label>
+                                    <ion-radio value="M"></ion-radio>
                                 </ion-item>
-                                <div class="error-messages">
-                                    <ng-container *ngFor="let error of errorMessages.salePrice">
-                                        <div class="error-message"
-                                             *ngIf="productForm.get('salePrice').hasError(error.type) && (productForm.get('salePrice').dirty || productForm.get('salePrice').touched)">
-                                            {{error.message}}
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </ion-col>
-                        </ion-row>
-                        <ion-label class="label-form">Género</ion-label>
-                        <ion-radio-group formControlName="gender">
+                            </ion-radio-group>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-label class="label-form">Marca</ion-label>
                             <ion-item>
-                                <ion-icon name="woman"></ion-icon>
-                                <ion-label>Femenino</ion-label>
-                                <ion-radio value="F"></ion-radio>
+                                <ion-input disabled="true">{{trademark.name_trademark}}</ion-input>
+                                <ion-button color="light" (click)="showTrademarks()">
+                                    <ion-icon name="arrow-dropdown-circle"></ion-icon>
+                                </ion-button>
                             </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="label-form">Prenda</ion-label>
                             <ion-item>
-                                <ion-icon name="man"></ion-icon>
-                                <ion-label>Masculino</ion-label>
-                                <ion-radio value="M"></ion-radio>
+                                <ion-input disabled="true">{{garment.name_garment}}</ion-input>
+                                <ion-button color="light" (click)="showGarments()">
+                                    <ion-icon name="arrow-dropdown-circle"></ion-icon>
+                                </ion-button>
                             </ion-item>
-                        </ion-radio-group>
-                        <ion-row>
-                            <ion-col size="6">
-                                <ion-label class="label-form">Marca</ion-label>
-                                <ion-item>
-                                    <ion-input disabled="true">{{trademark.name_trademark}}</ion-input>
-                                    <ion-button color="light" (click)="showTrademarks()">
-                                        <ion-icon name="arrow-dropdown-circle"></ion-icon>
-                                    </ion-button>
-                                </ion-item>
-                            </ion-col>
-                            <ion-col size="6">
-                                <ion-label class="label-form">Prenda</ion-label>
-                                <ion-item>
-                                    <ion-input disabled="true">{{garment.name_garment}}</ion-input>
-                                    <ion-button color="light" (click)="showGarments()">
-                                        <ion-icon name="arrow-dropdown-circle"></ion-icon>
-                                    </ion-button>
-                                </ion-item>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col size="3">
-                                <ion-button shape="round" [disabled]="!productForm.valid" color="primary"
-                                            (click)="accept(MESSAGE_CONFIRM_ADD)" size="large">
-                                    Aceptar
-                                </ion-button>
-                            </ion-col>
-                            <ion-col size="3" offset="3">
-                                <ion-button color="danger" shape="round" (click)="cancel(MESSAGE_CANCEL_ADD)"
-                                            size="large">
-                                    Cancelar
-                                </ion-button>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-button shape="round" [disabled]="!productForm.valid" color="primary"
+                                        (click)="accept(MESSAGE_CONFIRM_ADD)" size="large">
+                                Aceptar
+                            </ion-button>
+                        </ion-col>
+                        <ion-col size="3" offset="3">
+                            <ion-button color="danger" shape="round" (click)="cancel(MESSAGE_CANCEL_ADD)"
+                                        size="large">
+                                Cancelar
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
                 </form>
             </ion-col>
         </ion-row>

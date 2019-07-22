@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, PickerController, AlertController, ToastController, ActionSheetController} from '@ionic/angular';
+import {
+    ModalController,
+    PickerController,
+    AlertController,
+    ToastController,
+    ActionSheetController,
+    LoadingController
+} from '@ionic/angular';
 import {ProductModel} from '../models/Product.model';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {PickerOptions} from '@ionic/core';
@@ -9,8 +16,8 @@ import {GarmentService} from '../garment/garment.service';
 import {GarmentModel} from '../models/Garment.model';
 import {ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker/ngx';
 import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
+import {ModalAddProductService} from './modal-add-product.service';
 
 @Component({
     selector: 'app-modal-add-product',
@@ -38,9 +45,12 @@ export class ModalAddProductPage implements OnInit {
                 public pickerCtrl: PickerController, public trademarkService: TrademarkService,
                 public garmentservice: GarmentService, private alertCtrl: AlertController,
                 private camera: Camera, private actionSheetCtrl: ActionSheetController,
-                public toastCtrl: ToastController, private imagePicker: ImagePicker, private photoViewer: PhotoViewer) {
+                public toastCtrl: ToastController,
+                private photoViewer: PhotoViewer, private addProductService: ModalAddProductService,
+                private loadingCtrl: LoadingController) {
         this.dataProduct = new ProductModel();
         this.dataProduct.gender_product = 'M';
+        this.dataProduct.utility_product = 0;
         this.createProductForm();
         this.trademark = new TrademarkModel();
         this.garment = new GarmentModel();
@@ -56,7 +66,7 @@ export class ModalAddProductPage implements OnInit {
     public createProductForm() {
         const validatorNumField = Validators.compose([
             Validators.required,
-            Validators.min(100),
+            Validators.min(50),
             Validators.max(9999999999)
         ]);
         this.productForm = this.formBuilder.group({
@@ -69,8 +79,12 @@ export class ModalAddProductPage implements OnInit {
                 Validators.max(99999)
             ]))
             , price: new FormControl('', validatorNumField)
-            , salePrice: new FormControl('', validatorNumField)
             , gender: new FormControl(this.dataProduct.gender_product, Validators.required)
+            , size: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.maxLength(10)
+            ]))
+            , utility: new FormControl()
         });
     }
 
@@ -125,14 +139,40 @@ export class ModalAddProductPage implements OnInit {
     sendProduct() {
         this.dataProduct.name_product = this.productForm.value.name;
         this.dataProduct.price_product = this.productForm.value.price;
-        this.dataProduct.sale_price_product = this.productForm.value.salePrice;
+        this.dataProduct.status_product = 'A';
         this.dataProduct.gender_product = this.productForm.value.gender;
         this.dataProduct.quantity = this.productForm.value.quantity;
         this.dataProduct.date = new Date();
         console.log(this.dataProduct);
+        this.addProductService.createProduct(this.dataProduct).subscribe(res => {
+            console.log(res);
+            this.saveProductkLoading();
+            this.showMessage('Mensaje', 'Agregando producto', 'Producto agregado correctamente');
+        }, (error) => {
+            this.showMessage('Mensaje', 'Modificar producto',
+                'El producto no se pudo agregar. Existe un problema en la conexión.');
+        });
         this.modalCtrl.dismiss({
             value: true
         });
+    }
+
+    async saveProductkLoading() {
+        const loading = await this.loadingCtrl.create({
+            message: 'Procesando',
+            duration: 2000
+        });
+        await loading.present();
+    }
+
+    async showMessage(messageHeader, messageSubHeader, messageDialog) {
+        const alert = await this.alertCtrl.create({
+            header: messageHeader,
+            subHeader: messageSubHeader,
+            message: messageDialog,
+            buttons: ['OK']
+        });
+        await alert.present();
     }
 
     async cancel(message: string) {
@@ -263,19 +303,21 @@ export class ModalAddProductPage implements OnInit {
     }
 
     getImages() {
-        const options: ImagePickerOptions = {
-            maximumImagesCount: 4,
-            quality: 50,
-            outputType: 1
+        const options: CameraOptions = {
+            quality: 70,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE,
+            allowEdit: false,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
         };
-        this.imagePicker.getPictures(options).then((results) => {
-            for (let i = 0; i < results.length; i++) {
-                this.map.set(this.imagesCount, 'data:image/jpeg;base64,' + results[i]);
-                this.imagesCount++;
-            }
-        }).catch((err) => {
-            alert(err);
-        });
+        this.camera.getPicture(options)
+            .then(imageData => {
+                this.map.set(this.imagesCount++, 'data:image/jpeg;base64,' + imageData);
+            })
+            .catch(error => {
+                prompt(error);
+            });
     }
 
     async showMaxPhotoToast() {
