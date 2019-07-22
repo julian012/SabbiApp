@@ -330,14 +330,6 @@ module.exports = [
         "id": "cordova-plugin-statusbar.StatusBarProxy",
         "pluginId": "cordova-plugin-statusbar",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-telerik-imagepicker/www/imagepicker.js",
-        "id": "cordova-plugin-telerik-imagepicker.ImagePicker",
-        "pluginId": "cordova-plugin-telerik-imagepicker",
-        "clobbers": [
-            "plugins.imagePicker"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -352,7 +344,6 @@ module.exports.metadata =
     "cordova-plugin-ionic-webview": "4.1.1",
     "cordova-plugin-splashscreen": "5.0.3",
     "cordova-plugin-statusbar": "2.4.3",
-    "cordova-plugin-telerik-imagepicker": "2.3.3",
     "cordova-plugin-whitelist": "1.3.4"
 }
 // BOTTOM OF METADATA

@@ -11,7 +11,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {IonicGestureConfig} from './ionicgestureconfig/ionic-gesture-config.service';
 import { ReactiveFormsModule} from '@angular/forms';
 import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
-import {ImagePicker} from '@ionic-native/image-picker/ngx';
 import {Camera} from '@ionic-native/camera/ngx';
 import {ReportPage} from './report/report.page';
 
@@ -29,11 +28,10 @@ import {ReportPage} from './report/report.page';
     StatusBar,
     SplashScreen,
     HttpClient,
+    PhotoViewer,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
-      ImagePicker,
-      PhotoViewer,
-      Camera
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig }
   ],
   bootstrap: [AppComponent]
 })

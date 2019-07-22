@@ -5,10 +5,9 @@ export class ProductModel {
     public name_product: string;
     public size_product: number;
     public gender_product: string;
-    public color_product; string;
     public status_product: string;
     public price_product: number;
-    public sale_price_product: number;
+    public utility_product: number;
     public quantity: number;
     public date: Date;
 }

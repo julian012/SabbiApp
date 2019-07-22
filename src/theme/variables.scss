@@ -76,7 +76,21 @@
   --ion-color-light-tint: #f5f6f9;
 
   //Los que yo cree
-  --ion-color-test: #55acee;
+  --ion-color-azul: #4ABDAC;
+  --ion-color-azul-rgb: 74,189,172;
+  --ion-color-azul-contrast: #000000;
+  --ion-color-azul-contrast-rgb: 0,0,0;
+  --ion-color-azul-shade: #41a697;
+  --ion-color-azul-tint: #5cc4b4;
+}
+
+.ion-color-azul {
+  --ion-color-base: var(--ion-color-azul);
+  --ion-color-base-rgb: var(--ion-color-azul-rgb);
+  --ion-color-contrast: var(--ion-color-azul-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-azul-contrast-rgb);
+  --ion-color-shade: var(--ion-color-azul-shade);
+  --ion-color-tint: var(--ion-color-azul-tint);
 }
 
 .modalClientInfo .modal-wrapper{

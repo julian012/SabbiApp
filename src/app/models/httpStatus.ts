@@ -43,12 +43,11 @@ export const ERRORMESSAGES_PRODUCT = {
         {type: 'min', message: 'La cantidad de productos es menor a 1'}
     ], price: [
         {type: 'required', message: 'Campo obligatorio'},
-        {type: 'min', message: 'El precio debe ser mayor que o igual a $100'},
+        {type: 'min', message: 'El precio debe ser mayor que o igual a $50'},
         {type: 'max', message: 'El precio supera las 10 cifras'}
-    ], salePrice: [
+    ], size: [
         {type: 'required', message: 'Campo obligatorio'},
-        {type: 'min', message: 'El precio debe ser mayor que o igual a $100'},
-        {type: 'max', message: 'El precio supera las 10 cifras'}
+        {type: 'maxlength', message: 'La talla supera los 10 caracteres'},
     ]
 };
 
