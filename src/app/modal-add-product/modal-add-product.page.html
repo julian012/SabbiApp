@@ -52,13 +52,13 @@
                         </ion-row>
                         <ion-item>
                             <ion-label class="label-form" position="floating">Cantidad</ion-label>
-                            <ion-input type="number" formControlName="size"></ion-input>
+                            <ion-input type="number" formControlName="quantity"></ion-input>
                         </ion-item>
                         <ion-row>
                             <div class="error-messages">
-                                <ng-container *ngFor="let error of errorMessages.size">
+                                <ng-container *ngFor="let error of errorMessages.quantity">
                                     <div class="error-message"
-                                         *ngIf="productForm.get('size').hasError(error.type) && (productForm.get('size').dirty || productForm.get('size').touched)">
+                                         *ngIf="productForm.get('quantity').hasError(error.type) && (productForm.get('quantity').dirty || productForm.get('quantity').touched)">
                                         {{error.message}}
                                     </div>
                                 </ng-container>
@@ -112,8 +112,7 @@
                             <ion-col size="6">
                                 <ion-label class="label-form">Marca</ion-label>
                                 <ion-item>
-                                    <ion-input formControlName="name"
-                                               disabled="true">{{trademark.name_trademark}}</ion-input>
+                                    <ion-input disabled="true">{{trademark.name_trademark}}</ion-input>
                                     <ion-button color="light" (click)="showTrademarks()">
                                         <ion-icon name="arrow-dropdown-circle"></ion-icon>
                                     </ion-button>
@@ -132,7 +131,7 @@
                         <ion-row>
                             <ion-col size="3">
                                 <ion-button shape="round" [disabled]="!productForm.valid" color="primary"
-                                            (click)="accept()" size="large">
+                                            (click)="accept(MESSAGE_CONFIRM_ADD)" size="large">
                                     Aceptar
                                 </ion-button>
                             </ion-col>

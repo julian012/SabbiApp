@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
+import {LoadingController} from '@ionic/angular';
 import {TrademarkModel} from '../models/Trademark.model';
 import {TrademarkService} from './trademark.service';
 
@@ -28,6 +28,7 @@ export class TrademarkPage implements OnInit {
 
     public loadTrademark(): void {
         this.dataTrademark = this.trademarkService.getTrademarks();
+        console.log(this.trademarkService);
     }
 
     public createTrademark(data: string): void {
@@ -35,14 +36,15 @@ export class TrademarkPage implements OnInit {
         trademark.name_trademark = data;
         trademark.id_trademark = -1;
         if (this.dataTrademark.find(x => x.name_trademark.toUpperCase() === data.toUpperCase())) {
-            this.showMessage(this.MESSAGE_TRADEMARK_EXIST);
+            this.showMessage('Mensaje', 'Modificar marca', this.MESSAGE_TRADEMARK_EXIST);
         } else {
-            this.trademarkService.createTrademark(trademark).subscribe( res => {
+            this.trademarkService.createTrademark(trademark).subscribe(async res => {
                 console.log(res);
-                this.loadTrademark();
-                this.showMessage(this.MESSAGE_TRADEMARK_ADDED);
+                this.saveTrademarkLoading();
+                await this.loadTrademark();
+                this.showMessage('Mensaje', 'Modificar marca', this.MESSAGE_TRADEMARK_ADDED);
             }, (error) => {
-                this.showMessage(this.MESSAGE_TRADEMARK_CONN);
+                this.showMessage('Mensaje', 'Modificar marca', this.MESSAGE_TRADEMARK_CONN);
             });
         }
     }
@@ -85,95 +87,103 @@ export class TrademarkPage implements OnInit {
         await prompt.present();
     }
 
-    // async changeNamePlatform(platform : PlatformModel) {
-    //     let prompt = await this.alertCtrl.create({
-    //         header: 'Modificar Plataforma',
-    //         message: "Ingrese el nombre de la plataforma. Tenga en cuenta que si el nombre cambia, se va a ver reflejado tambien en los reportes",
-    //         inputs: [
-    //             {
-    //                 name: 'title',
-    //                 placeholder: 'Nombre'
-    //             },
-    //         ],
-    //         buttons: [
-    //             {
-    //                 text: 'Cancelar',
-    //                 handler: data => {
-    //                     console.log('Cancel clicked');
-    //                 }
-    //             },
-    //             {
-    //                 text: 'Modificar',
-    //                 handler: data => {
-    //                     platform.name_platform = data.title;
-    //                     this.dataPlatformService.updatePlatform(platform).subscribe( (res) => {
-    //                         this.savePlatformLoading();
-    //                         this.showMessage('Mensaje','Modificar plataforma','Nombre de la plataforma modificada correctamente');
-    //                     }, (error) => {
-    //                         this.savePlatformLoading();
-    //                         this.showMessage('Mensaje','Modificar plataforma','Nombre de la plataforma no se pudo modificar. Verifique que no se repite con ya alguno guardado');
-    //                     });
-    //                 }
-    //             }
-    //         ]
-    //     });
-    //     await prompt.present();
-    // }
-    //
-    async showMessage(messageDialog) {
+    async changeTrademarkName(trademark : TrademarkModel) {
+        const prompt = await this.alertCtrl.create({
+            header: 'Modificar Marca',
+            message: 'Ingrese el nombre de la marca. Tenga en cuenta que si el nombre cambia, se va a ver reflejado tambien en los reportes',
+            inputs: [
+                {
+                    name: 'title',
+                    placeholder: 'Nombre'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Modificar',
+                    handler: data => {
+                        trademark.name_trademark = data.title;
+                        this.trademarkService.updateTrademark(trademark).subscribe( (res) => {
+                            this.saveTrademarkLoading();
+                            this.showMessage('Mensaje', 'Modificar marca',
+                                'Nombre de la marca modificada correctamente');
+                        }, (error) => {
+                            this.showMessage('Mensaje', 'Modificar marca',
+                                'Nombre de la marca no se pudo modificar. Existe un problema en la conexión.');
+                        });
+                    }
+                }
+            ]
+        });
+        await prompt.present();
+    }
+
+    async showMessage(messageHeader, messageSubHeader, messageDialog) {
         const alert = await this.alertCtrl.create({
-            header: 'Mensaje',
-            subHeader: 'Agregando plataforma',
+            header: messageHeader,
+            subHeader: messageSubHeader,
             message: messageDialog,
             buttons: ['OK']
         });
         await alert.present();
     }
 
-    // public changeStatusPlatform(platform : PlatformModel){
-    //     console.log("Cambio " + platform.name_platform + " con estado " + platform.status_platform);
-    //     this.dataPlatformService.updatePlatform(platform).subscribe( res =>{
-    //         console.log(res);
-    //     });
-    // }
-    //
-    // public generatePath(name : string){
-    //     //return this.dataPlatformService.validateUrlImagePlatform(name);
-    //     return "https://logo.clearbit.com/" + name + ".com";
-    //     /*https://ui-avatars.com/api/?name=MercadoLibre Api para en caso de no encontrar la imagen*/
-    // }
-    //
-    // public generatePathAlternative(name : string){
-    //     console.log("https://ui-avatars.com/api/?name=" + name);
-    //     return "https://ui-avatars.com/api/?name=" + name ;
-    // }
-    //
-    // async deletePlatform(platform : PlatformModel){
-    //     const alert = await this.alertCtrl.create({
-    //         header: 'Confirmación',
-    //         message: `¿Seguro desea eliminar la plataforma ${platform.name_platform}?`,
-    //         cssClass: 'options-as-platforms',
-    //         buttons: [
-    //             {
-    //                 text: 'Cancelar',
-    //                 role: 'cancel',
-    //
-    //             }, {
-    //                 text: 'Continuar',
-    //                 handler: () => {
-    //                     this.dataPlatformService.deletePlatform(platform).subscribe( res =>{
-    //                         this.showMessage('Mensaje','Eliminando plataforma', 'Plataforma eliminada correctamente');
-    //                         this.savePlatformLoading();
-    //                         this.loadPlatforms();
-    //                     }, (error) => {
-    //                         this.showMessage('Error', 'Eliminando plataforma','No se puede eliminar la plataforma, debido a que ya fue asignada a una venta. En tal caso de no usarla más, la puede desactivar')
-    //                     });;
-    //                 }
-    //             }
-    //         ]
-    //     });
-    //
-    //     await alert.present();
-    //
-    // }
+    async deleteTrademark(trademarkModel: TrademarkModel) {
+        const alert = await this.alertCtrl.create({
+            header: 'Confirmación',
+            message: `¿Seguro desea eliminar la plataforma ${trademarkModel.name_trademark}?`,
+            cssClass: 'options-as-platforms',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+
+                }, {
+                    text: 'Continuar',
+                    handler: () => {
+                        this.trademarkService.deleteTrademark(trademarkModel).subscribe(res => {
+                            this.showMessage('Mensaje', 'Eliminando marca', 'Marca eliminada correctamente');
+                            this.saveTrademarkLoading();
+                            this.loadTrademark();
+                        }, (error) => {
+                            this.showMessage('Error', 'Eliminando marca',
+                                'No se puede eliminar la plataforma, debido a un error de conexión.');
+                        });
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async optionsInTrademarks(trademark: TrademarkModel) {
+        const actionSheet = await this.actionSheetCtrl.create({
+            header: trademark.name_trademark,
+            buttons: [{
+                text: 'Eliminar',
+                icon: 'close-circle',
+                cssClass: 'danger',
+                handler: () => {
+                    this.deleteTrademark(trademark);
+                }
+            }, {
+                text: 'Cambiar nombre',
+                icon: 'build',
+                handler: () => {
+                    this.changeTrademarkName(trademark);
+                }
+            }, {
+                text: 'Cancelar',
+                role: 'cancel'
+            }
+            ]
+        });
+        await actionSheet.present();
+    }
 }

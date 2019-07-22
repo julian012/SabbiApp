@@ -31,9 +31,8 @@ export class ModalAddProductPage implements OnInit {
     public gender = '';
     public pickerTradeActive = false;
     private imagesCount = 0;
-    private imagesAmount = 0;
+    private imagesAmount = 4;
     public map = new Map();
-
 
     constructor(private modalCtrl: ModalController, public formBuilder: FormBuilder,
                 public pickerCtrl: PickerController, public trademarkService: TrademarkService,
@@ -64,7 +63,7 @@ export class ModalAddProductPage implements OnInit {
             name: new FormControl('', Validators.compose([
                 Validators.required,
                 Validators.maxLength(20)
-            ])), size: new FormControl('', Validators.compose([
+            ])), quantity: new FormControl('', Validators.compose([
                 Validators.required,
                 Validators.min(1),
                 Validators.max(99999)
@@ -77,7 +76,7 @@ export class ModalAddProductPage implements OnInit {
 
     async loadTrademarks() {
         this.trademarkService.getTrademarks().forEach(trademark => {
-            this.trademarkPickerList.push({text: trademark.name_trademark, value: (trademark.id_trademark + '')});
+            this.trademarkPickerList.push({text: trademark.name_trademark, value: trademark.id_trademark});
         });
         if (this.trademarkPickerList.length > 0) {
             this.trademark.name_trademark = this.trademarkPickerList[0].text;
@@ -91,7 +90,7 @@ export class ModalAddProductPage implements OnInit {
 
     private loadGarments() {
         this.garmentservice.getGarmentList().forEach(garment => {
-            this.garmentPickerList.push({text: garment.name_garment, value: (garment.id_garment + '')});
+            this.garmentPickerList.push({text: garment.name_garment, value: garment.id_garment});
         });
         if (this.garmentPickerList.length > 0) {
             this.garment.name_garment = this.garmentPickerList[0].text;
@@ -103,7 +102,34 @@ export class ModalAddProductPage implements OnInit {
         }
     }
 
-    accept() {
+    async accept(message: string) {
+        const alert = await this.alertCtrl.create({
+            header: 'Confirmación',
+            message,
+            cssClass: 'options-as-products',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                }, {
+                    text: 'Continuar',
+                    handler: async () => {
+                        this.sendProduct();
+                    }
+                }
+            ]
+        });
+        await alert.present();
+    }
+
+    sendProduct() {
+        this.dataProduct.name_product = this.productForm.value.name;
+        this.dataProduct.price_product = this.productForm.value.price;
+        this.dataProduct.sale_price_product = this.productForm.value.salePrice;
+        this.dataProduct.gender_product = this.productForm.value.gender;
+        this.dataProduct.quantity = this.productForm.value.quantity;
+        this.dataProduct.date = new Date();
+        console.log(this.dataProduct);
         this.modalCtrl.dismiss({
             value: true
         });
@@ -113,7 +139,7 @@ export class ModalAddProductPage implements OnInit {
         const alert = await this.alertCtrl.create({
             header: 'Confirmación',
             message,
-            cssClass: 'options-as-platforms',
+            cssClass: 'options-as-products',
             buttons: [
                 {
                     text: 'Cancelar',
@@ -144,6 +170,7 @@ export class ModalAddProductPage implements OnInit {
                     handler: (value: any): void => {
                         this.trademark.name_trademark = value.Trademark.text;
                         this.trademark.id_trademark = value.Trademark.value;
+                        this.dataProduct.id_trademark = value.Trademark.value;
                     }
                 }
             ], columns: [
@@ -172,6 +199,7 @@ export class ModalAddProductPage implements OnInit {
                     handler: (value: any): void => {
                         this.garment.name_garment = value.Garment.text;
                         this.garment.id_garment = value.Garment.value;
+                        this.dataProduct.id_garment = value.Garment.value;
                     }
                 }
             ], columns: [
@@ -227,8 +255,7 @@ export class ModalAddProductPage implements OnInit {
         };
         this.camera.getPicture(options)
             .then(imageData => {
-                this.map.set(this.imagesAmount++, 'data:image/jpeg;base64,' + imageData);
-                this.imagesCount++;
+                this.map.set(this.imagesCount++, 'data:image/jpeg;base64,' + imageData);
             })
             .catch(error => {
                 prompt(error);
@@ -241,13 +268,12 @@ export class ModalAddProductPage implements OnInit {
             quality: 50,
             outputType: 1
         };
-        this.imagePicker.getPictures(options)
-            .then((results) => {
-                for (let i = 0; i < results.length; i++) {
-                    this.map.set(this.imagesAmount++, 'data:image/jpeg;base64,' + results[i]);
-                    this.imagesCount++;
-                }
-            }).catch((err) => {
+        this.imagePicker.getPictures(options).then((results) => {
+            for (let i = 0; i < results.length; i++) {
+                this.map.set(this.imagesCount, 'data:image/jpeg;base64,' + results[i]);
+                this.imagesCount++;
+            }
+        }).catch((err) => {
             alert(err);
         });
     }

@@ -37,7 +37,7 @@ export const ERRORMESSAGES_PRODUCT = {
     name: [
         {type: 'required', message: 'Campo obligatorio'},
         {type: 'maxlength', message: 'El nombre no puede superar los 25 caracteres'}
-    ], size: [
+    ], quantity: [
         {type: 'required', message: 'Campo obligatorio'},
         {type: 'max', message: 'La cantidad de productos es mayor a 99999'},
         {type: 'min', message: 'La cantidad de productos es menor a 1'}

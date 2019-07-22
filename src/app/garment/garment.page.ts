@@ -56,8 +56,8 @@ export class GarmentPage implements OnInit {
 
     async showPrompt() {
         const prompt = await this.alertCtrl.create({
-            header: 'Agregar Marca',
-            message: 'Ingrese el nombre de la marca que desea agregrar',
+            header: 'Agregar Prenda',
+            message: 'Ingrese el nombre de la prenda que desea agregrar',
             inputs: [
                 {
                     name: 'title',
@@ -86,7 +86,7 @@ export class GarmentPage implements OnInit {
 
     async changeGarmentName(garment: GarmentModel) {
         const prompt = await this.alertCtrl.create({
-            header: 'Modificar Marca',
+            header: 'Modificar Prenda',
             message: 'Ingrese el nombre de la prenda. Tenga en cuenta que si el nombre cambia,' +
                 ' se va a ver reflejado tambien en los reportes',
             inputs: [
@@ -120,19 +120,18 @@ export class GarmentPage implements OnInit {
             garment.name_garment = title;
             this.garmentService.updateGarment(garment).subscribe((res) => {
                 this.saveGarmentLoading();
-                this.showMessage('Mensaje', 'Modificar prenda', 'Nombre de la prenda modificada correctamente');
+                this.showMessage('Mensaje', 'Modificar prenda', this.MESSAGE_GARMENT_ADDED);
             }, (error) => {
                 this.saveGarmentLoading();
-                this.showMessage('Mensaje', 'Modificar prenda', 'Nombre de la prenda ' +
-                    'no se pudo modificar. Error en la conexión.');
+                this.showMessage('Mensaje', 'Modificar prenda', this.MESSAGE_GARMENT_CONN);
             });
         }
     }
 
     async showMessage(messageHeader, messageSubHeader, messageDialog) {
         const alert = await this.alertCtrl.create({
-            header: 'Mensaje',
-            subHeader: 'Agregando plataforma',
+            header: messageHeader,
+            subHeader: messageSubHeader,
             message: messageDialog,
             buttons: ['OK']
         });
@@ -162,7 +161,7 @@ export class GarmentPage implements OnInit {
                             this.saveGarmentLoading();
                         }, (error) => {
                             this.showMessage('Error', 'Eliminando prenda',
-                                'No se puede eliminar la prenda, debido un problema en la conexión');
+                                'No se puede eliminar la prenda, debido a un problema en la conexión');
                         });
                     }
                 }
