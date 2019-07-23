@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="salmon">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,7 +8,29 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-grid>
+        <table width="100%" id="table">
+          <thead>
+            <tr id="table">
+              <th><ion-card-subtitle>Fecha</ion-card-subtitle></th>
+              <th><ion-card-subtitle>Plataforma</ion-card-subtitle></th>
+              <th><ion-card-subtitle>Precio</ion-card-subtitle></th>
+              <th><ion-card-subtitle>Detalles</ion-card-subtitle></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sale of salesList" id="table">
+              <td>{{getDate(sale.sale_date)}}</td>
+              <td>{{sale.name_platform}}</td>
+              <td>${{sale.sale_price_total | number}}</td>
+              <td><ion-button (click)="showDetails(sale.id_sale)">Detalles</ion-button></td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-grid>
+    </ion-row>
+  </ion-grid>
 </ion-content>

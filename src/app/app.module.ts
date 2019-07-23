@@ -14,10 +14,11 @@ import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
 import {Camera} from '@ionic-native/camera/ngx';
 import {ReportPage} from './report/report.page';
 import {BillComponent} from './bill/bill.component';
+import {ModalSaleDetailComponent} from './sales/modal-sale-detail/modal-sale-detail.component';
 
 @NgModule({
-  declarations: [AppComponent, ReportPage, BillComponent],
-  entryComponents: [ReportPage, BillComponent],
+  declarations: [AppComponent, ReportPage, BillComponent, ModalSaleDetailComponent],
+  entryComponents: [ReportPage, BillComponent, ModalSaleDetailComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
