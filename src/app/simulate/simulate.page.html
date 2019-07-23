@@ -61,7 +61,7 @@
       <ion-label id="result">Precio recomendado para la venta</ion-label>
     </ion-item>
     <ion-item text-center id="result">
-      <ion-label color="danger"> {{result}} $COP - {{resultDollar}} $USD</ion-label>
+      <ion-label color="danger"> {{result  | number }} $COP - {{resultDollar | number}} $USD</ion-label>
     </ion-item>
   </ion-card>
 </ion-content>

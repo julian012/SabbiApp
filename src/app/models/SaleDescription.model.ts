@@ -8,4 +8,8 @@ export class SaleDescriptionModel {
     quantity: number;
     sale_price: number;
     sale_date: string;
+    first_name: string;
+    last_name: string;
+    document_user: string;
+    id_sale: string;
 }
