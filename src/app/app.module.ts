@@ -13,12 +13,14 @@ import { ReactiveFormsModule} from '@angular/forms';
 import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
 import {Camera} from '@ionic-native/camera/ngx';
 import {ReportPage} from './report/report.page';
-import {BillComponent} from './bill/bill.component';
 import {ModalSaleDetailComponent} from './sales/modal-sale-detail/modal-sale-detail.component';
+import { HTTP } from '@ionic-native/http/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Screenshot } from '@ionic-native/screenshot/ngx';
 
 @NgModule({
-  declarations: [AppComponent, ReportPage, BillComponent, ModalSaleDetailComponent],
-  entryComponents: [ReportPage, BillComponent, ModalSaleDetailComponent],
+  declarations: [AppComponent, ReportPage, ModalSaleDetailComponent],
+  entryComponents: [ReportPage, ModalSaleDetailComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -30,8 +32,11 @@ import {ModalSaleDetailComponent} from './sales/modal-sale-detail/modal-sale-det
     StatusBar,
     SplashScreen,
     HttpClient,
+    HTTP,
     PhotoViewer,
     Camera,
+    ScreenOrientation,
+    Screenshot,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig }
   ],

@@ -9,28 +9,34 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="showClientSelector()">
+            <ion-icon name="md-add" ></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
   <ion-grid>
     <ion-row>
-      <ion-grid>
-        <table width="100%" id="table">
-          <thead>
-            <tr id="table">
-              <th><ion-card-subtitle>Fecha</ion-card-subtitle></th>
-              <th><ion-card-subtitle>Plataforma</ion-card-subtitle></th>
-              <th><ion-card-subtitle>Precio</ion-card-subtitle></th>
-              <th><ion-card-subtitle>Detalles</ion-card-subtitle></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let sale of salesList" id="table">
-              <td>{{getDate(sale.sale_date)}}</td>
-              <td>{{sale.name_platform}}</td>
-              <td>${{sale.sale_price_total | number}}</td>
-              <td><ion-button (click)="showDetails(sale.id_sale)">Detalles</ion-button></td>
-            </tr>
-          </tbody>
-        </table>
-      </ion-grid>
+      <ng-container *ngFor="let sale of salesList" >
+        <ion-col size="11" offset="0.5">
+        <ion-card color="light">
+          <ion-card-content no-padding>
+            <ion-row>
+              <ion-col size="5">
+                <img [src]="getImage(sale.name_platform)">
+              </ion-col>
+              <ion-col size="7" no-padding no-margin>
+                <ion-card-title text-center>Numero de factura: 0{{sale.id_sale}}</ion-card-title>
+                <ion-card-subtitle text-center>Fecha: {{getDate(sale.sale_date)}}</ion-card-subtitle>
+                <ion-card-content text-center>Valor: ${{sale.sale_price_total | number}}
+                  <ion-label slot="start"></ion-label><br>
+                  <ion-button (click)="showDetails(sale.id_sale)">Detalles</ion-button>
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+        </ion-col>
+      </ng-container>
     </ion-row>
   </ion-grid>
 </ion-content>

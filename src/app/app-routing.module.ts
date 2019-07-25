@@ -50,6 +50,9 @@ const routes: Routes = [
     {
         path: 'products',
         loadChildren: './products/products.module#ProductsPageModule'
+    },
+    {   path: 'sale-search-client',
+        loadChildren: './sale-search-client/sale-search-client.module#SaleSearchClientPageModule'
     }
 ];
 

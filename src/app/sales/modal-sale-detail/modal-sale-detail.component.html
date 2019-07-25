@@ -1,16 +1,20 @@
 <ion-header>
   <ion-toolbar color="success">
+      <ion-icon name="arrow-round-back" class="larger" slot="start" (click)="dismiss()"></ion-icon>
     <ion-title>
       Detalles de la compra
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="cloud-download" class="larger" (click)="capture()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content scroll-x>
-<table style="border: solid; width: 520px; border-collapse: collapse" >
+<table style="border: solid; width: 520px; border-collapse: collapse; font-family: Arial; font-size: 12px" align="center">
   <tr style="border: solid; border-bottom: none">
     <td colspan="2">
       <div style="width: 240px">
-        <img src="https://res.cloudinary.com/donkqe9gl/image/upload/v1563857082/sabbiApp/Logo_xoihzu.jpg" width="100%">
+        <img src="https://res.cloudinary.com/donkqe9gl/image/upload/v1563857082/sabbiApp/Logo_xoihzu.jpg" width="80%">
       </div>
     </td>
     <td colspan="3">

@@ -1,10 +1,12 @@
 import * as tslib_1 from "tslib";
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http/ngx';
 import { HTTP_URL } from '../models/httpStatus';
 var SalesService = /** @class */ (function () {
-    function SalesService(http) {
+    function SalesService(http, http2) {
         this.http = http;
+        this.http2 = http2;
         this.saleList = [];
     }
     //Retorna la lista de ventas
@@ -26,7 +28,8 @@ var SalesService = /** @class */ (function () {
         Injectable({
             providedIn: 'root'
         }),
-        tslib_1.__metadata("design:paramtypes", [HttpClient])
+        tslib_1.__metadata("design:paramtypes", [HttpClient,
+            HTTP])
     ], SalesService);
     return SalesService;
 }());
