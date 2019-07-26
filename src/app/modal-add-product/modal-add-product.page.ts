@@ -143,14 +143,29 @@ export class ModalAddProductPage implements OnInit {
         this.dataProduct.gender_product = this.productForm.value.gender;
         this.dataProduct.quantity = this.productForm.value.quantity;
         this.dataProduct.date = new Date();
+        this.dataProduct.size_product = this.productForm.value.size;
         console.log(this.dataProduct);
         this.addProductService.createProduct(this.dataProduct).subscribe(res => {
-            console.log(res);
-            this.saveProductkLoading();
-            this.showMessage('Mensaje', 'Agregando producto', 'Producto agregado correctamente');
+            this.sendImages(res);
         }, (error) => {
             this.showMessage('Mensaje', 'Modificar producto',
                 'El producto no se pudo agregar. Existe un problema en la conexión.');
+        });
+    }
+
+    sendImages(resProduct) {
+        this.saveProductkLoading();
+        this.map.forEach(img => {
+            this.addProductService.addProductImage({
+                id_product: resProduct.id_product,
+                id_product_price: resProduct.id_product_price,
+                image: img
+            }).subscribe(res => {
+                this.showMessage('Mensaje', 'Agregando producto', 'Producto agregado correctamente');
+            }, (error) => {
+                this.showMessage('Mensaje', 'Agregando producto',
+                    'El producto no se pudo agregar. Existe un problema en la conexión.');
+            });
         });
         this.modalCtrl.dismiss({
             value: true
@@ -288,6 +303,8 @@ export class ModalAddProductPage implements OnInit {
     takePicture() {
         const options: CameraOptions = {
             quality: 70,
+            targetWidth: 500,
+            targetHeight: 500,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,

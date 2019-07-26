@@ -15,4 +15,9 @@ export class ProductsService {
     public getDataProduct(): Observable<ProductModel[]> {
         return this.http.get<ProductModel[]>(HTTP_URL + '/product');
     }
+
+    public getProductImage(productId) {
+        console.log(productId);
+        return this.http.post(HTTP_URL + '/photo', {product_id: productId});
+    }
 }

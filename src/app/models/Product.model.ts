@@ -9,5 +9,6 @@ export class ProductModel {
     public price_product: number;
     public utility_product: number;
     public quantity: number;
+    public url = new Array<string>();
     public date: Date;
 }
