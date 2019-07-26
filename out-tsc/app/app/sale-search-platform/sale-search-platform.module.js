@@ -4,30 +4,30 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SaleSearchClientPage } from './sale-search-client.page';
+import { SaleSearchPlatformPage } from './sale-search-platform.page';
 import { ProgressBarModule } from 'angular-progress-bar';
 var routes = [
     {
         path: '',
-        component: SaleSearchClientPage
+        component: SaleSearchPlatformPage
     }
 ];
-var SaleSearchClientPageModule = /** @class */ (function () {
-    function SaleSearchClientPageModule() {
+var SaleSearchPlatformPageModule = /** @class */ (function () {
+    function SaleSearchPlatformPageModule() {
     }
-    SaleSearchClientPageModule = tslib_1.__decorate([
+    SaleSearchPlatformPageModule = tslib_1.__decorate([
         NgModule({
             imports: [
                 CommonModule,
                 FormsModule,
                 IonicModule,
                 RouterModule.forChild(routes),
-                ProgressBarModule,
+                ProgressBarModule
             ],
-            declarations: [SaleSearchClientPage]
+            declarations: [SaleSearchPlatformPage]
         })
-    ], SaleSearchClientPageModule);
-    return SaleSearchClientPageModule;
+    ], SaleSearchPlatformPageModule);
+    return SaleSearchPlatformPageModule;
 }());
-export { SaleSearchClientPageModule };
-//# sourceMappingURL=sale-search-client.module.js.map
+export { SaleSearchPlatformPageModule };
+//# sourceMappingURL=sale-search-platform.module.js.map

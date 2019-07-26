@@ -1,22 +1,48 @@
 <ion-header>
-  <ion-toolbar color="salmon">
-    <ion-title>Seleccionar Cliente</ion-title>
+  <ion-toolbar color="azuloscuro">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1">
+          <ion-buttons>
+            <ion-icon name="arrow-round-back" (click)="exit()" class="larger"></ion-icon>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="9">
+          <ion-title >Agregar cliente</ion-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12"><br>
+          <ion-label style="margin-left: 5%; vertical-align: center; font-size: 120%">Progreso:</ion-label>
+          <progress-bar progress="25"  style="font-size: 120%" [color-degraded]="{'25': '#7CEBA8',  '50': '#3BE27C', '75': '#fd8c8e', '100': '#10DC60'}"></progress-bar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <!-- Default Progressbar -->
-  <ion-progress-bar></ion-progress-bar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="11" offset="0.5" text-center>
+        <ion-label color="medium" style="font-size: 150%"> Elige el cliente que realizo la compra</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-radio-group>
+            <ion-item *ngFor="let client of clientList">
+              <ion-label>{{client.first_name}} {{client.last_name}}</ion-label>
+              <ion-radio (click)="selectClient(client)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <!-- Default Progressbar with 50 percent -->
-  <ion-progress-bar value="0.5"></ion-progress-bar>
 
-  <!-- Colorize Progressbar -->
-  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
-  <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
-
-  <!-- Other types -->
-  <ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
-  <ion-progress-bar type="indeterminate"></ion-progress-bar>
-  <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
 </ion-content>
+<ion-footer >
+  <ion-button expand="full" color="azuloscuro" slot="fixed" size="large" [disabled]="disabled" (click)="showPlatformSelector()">Siguiente</ion-button>
+</ion-footer>

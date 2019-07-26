@@ -53,7 +53,9 @@ const routes: Routes = [
     },
     {   path: 'sale-search-client',
         loadChildren: './sale-search-client/sale-search-client.module#SaleSearchClientPageModule'
-    }
+    },
+  { path: 'sale-search-platform', loadChildren: './sale-search-platform/sale-search-platform.module#SaleSearchPlatformPageModule' },
+  { path: 'sales-search-product', loadChildren: './sales-search-product/sales-search-product.module#SalesSearchProductPageModule' }
 ];
 
 @NgModule({

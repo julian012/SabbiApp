@@ -1,22 +1,21 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { ClientService } from '../client/client.service';
 import { SalesService } from '../sales/sales.service';
-var SaleSearchClientPage = /** @class */ (function () {
-    function SaleSearchClientPage(router, alertCtrl, dataClientService, dataSaleService) {
+import { AlertController } from '@ionic/angular';
+var SalesSearchProductPage = /** @class */ (function () {
+    function SalesSearchProductPage(router, dataSaleService, alertCtrl) {
         this.router = router;
-        this.alertCtrl = alertCtrl;
-        this.dataClientService = dataClientService;
         this.dataSaleService = dataSaleService;
-        this.clientList = [];
+        this.alertCtrl = alertCtrl;
         this.disabled = true;
     }
-    SaleSearchClientPage.prototype.ngOnInit = function () {
-        this.clientList = this.dataClientService.getClients();
+    SalesSearchProductPage.prototype.ngOnInit = function () {
     };
-    SaleSearchClientPage.prototype.exit = function () {
+    SalesSearchProductPage.prototype.comeback = function () {
+        this.router.navigate(['/sale-search-platform']);
+    };
+    SalesSearchProductPage.prototype.comebackHome = function () {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             var alert;
             var _this = this;
@@ -49,27 +48,17 @@ var SaleSearchClientPage = /** @class */ (function () {
             });
         });
     };
-    SaleSearchClientPage.prototype.selectClient = function (client) {
-        this.client = client;
-        console.log('Selecciono:', client.first_name);
-        this.disabled = false;
-    };
-    SaleSearchClientPage.prototype.showPlatformSelector = function () {
-        this.dataSaleService.setClientInfo(this.client);
-        this.router.navigate(['/sale-search-platform']);
-    };
-    SaleSearchClientPage = tslib_1.__decorate([
+    SalesSearchProductPage = tslib_1.__decorate([
         Component({
-            selector: 'app-sale-search-client',
-            templateUrl: './sale-search-client.page.html',
-            styleUrls: ['./sale-search-client.page.scss'],
+            selector: 'app-sales-search-product',
+            templateUrl: './sales-search-product.page.html',
+            styleUrls: ['./sales-search-product.page.scss'],
         }),
         tslib_1.__metadata("design:paramtypes", [Router,
-            AlertController,
-            ClientService,
-            SalesService])
-    ], SaleSearchClientPage);
-    return SaleSearchClientPage;
+            SalesService,
+            AlertController])
+    ], SalesSearchProductPage);
+    return SalesSearchProductPage;
 }());
-export { SaleSearchClientPage };
-//# sourceMappingURL=sale-search-client.page.js.map
+export { SalesSearchProductPage };
+//# sourceMappingURL=sales-search-product.page.js.map

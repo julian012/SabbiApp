@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="product">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1">
+          <ion-buttons>
+            <ion-icon name="arrow-round-back" (click)="comeback()" class="larger"></ion-icon>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="8">
+          <ion-title >Seleccionar productos</ion-title>
+        </ion-col>
+        <ion-col size="3">
+          <ion-title text-right (click)="comebackHome()">Salir</ion-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12"><br>
+          <ion-label style="margin-left: 5%; vertical-align: center; font-size: 120%">Progreso:</ion-label>
+          <progress-bar progress="75"  style="font-size: 120%" [color-degraded]="{'25': '#7CEBA8',  '50': '#3BE27C', '75': '#fd8c8e', '100': '#10DC60'}"></progress-bar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>
+<ion-footer >
+  <ion-button expand="full" color="product" slot="fixed" size="large" [disabled]="disabled" >Siguiente</ion-button>
+</ion-footer>

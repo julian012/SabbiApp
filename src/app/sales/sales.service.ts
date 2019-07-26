@@ -4,6 +4,9 @@ import { HTTP } from '@ionic-native/http/ngx';
 import {Observable} from 'rxjs';
 import {SaleModel} from '../models/Sale.model';
 import {HTTP_URL} from '../models/httpStatus';
+import {SaleFormModel} from '../models/saleForm.model';
+import {ClientModel} from '../models/Client.model';
+import {PlatformModel} from '../models/Platform.model';
 
 
 @Injectable({
@@ -12,6 +15,8 @@ import {HTTP_URL} from '../models/httpStatus';
 export class SalesService {
 
   public saleList: SaleModel[] = [];
+  public saleFormModel = new SaleFormModel();
+
 
   constructor(private http: HttpClient,
               private http2: HTTP) { }
@@ -31,6 +36,22 @@ export class SalesService {
 
   public getInfoSales() {
     return this.saleList;
+  }
+
+  public setClientInfo(client: ClientModel) {
+    this.saleFormModel.id_user = client.id_user;
+    this.saleFormModel.document_user = client.document_user;
+    this.saleFormModel.first_name = client.first_name;
+    this.saleFormModel.last_name = client.last_name;
+  }
+
+  public setProductInfo(platform: PlatformModel) {
+    this.saleFormModel.id_platform = platform.id_platform;
+    this.saleFormModel.name_platform = platform.name_platform;
+  }
+
+  public cleanSaleForm() {
+    this.saleFormModel = new SaleFormModel();
   }
 }
 

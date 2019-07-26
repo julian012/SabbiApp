@@ -1,22 +1,34 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { ClientService } from '../client/client.service';
+import { PlatformsService } from '../platforms/platforms.service';
 import { SalesService } from '../sales/sales.service';
-var SaleSearchClientPage = /** @class */ (function () {
-    function SaleSearchClientPage(router, alertCtrl, dataClientService, dataSaleService) {
+import { AlertController } from '@ionic/angular';
+var SaleSearchPlatformPage = /** @class */ (function () {
+    function SaleSearchPlatformPage(router, platformService, dataSaleService, alertCtrl) {
         this.router = router;
-        this.alertCtrl = alertCtrl;
-        this.dataClientService = dataClientService;
+        this.platformService = platformService;
         this.dataSaleService = dataSaleService;
-        this.clientList = [];
+        this.alertCtrl = alertCtrl;
         this.disabled = true;
+        this.platformList = [];
     }
-    SaleSearchClientPage.prototype.ngOnInit = function () {
-        this.clientList = this.dataClientService.getClients();
+    SaleSearchPlatformPage.prototype.ngOnInit = function () {
+        this.platformList = this.platformService.getPlatforms();
     };
-    SaleSearchClientPage.prototype.exit = function () {
+    SaleSearchPlatformPage.prototype.selectPlatform = function (platform) {
+        this.platform = platform;
+        console.log('Selecciono:', platform.name_platform);
+        this.disabled = false;
+    };
+    SaleSearchPlatformPage.prototype.comeback = function () {
+        this.router.navigate(['/sale-search-client']);
+    };
+    SaleSearchPlatformPage.prototype.showProductSelector = function () {
+        this.dataSaleService.setProductInfo(this.platform);
+        this.router.navigate(['/sales-search-product']);
+    };
+    SaleSearchPlatformPage.prototype.comebackHome = function () {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             var alert;
             var _this = this;
@@ -49,27 +61,18 @@ var SaleSearchClientPage = /** @class */ (function () {
             });
         });
     };
-    SaleSearchClientPage.prototype.selectClient = function (client) {
-        this.client = client;
-        console.log('Selecciono:', client.first_name);
-        this.disabled = false;
-    };
-    SaleSearchClientPage.prototype.showPlatformSelector = function () {
-        this.dataSaleService.setClientInfo(this.client);
-        this.router.navigate(['/sale-search-platform']);
-    };
-    SaleSearchClientPage = tslib_1.__decorate([
+    SaleSearchPlatformPage = tslib_1.__decorate([
         Component({
-            selector: 'app-sale-search-client',
-            templateUrl: './sale-search-client.page.html',
-            styleUrls: ['./sale-search-client.page.scss'],
+            selector: 'app-sale-search-platform',
+            templateUrl: './sale-search-platform.page.html',
+            styleUrls: ['./sale-search-platform.page.scss'],
         }),
         tslib_1.__metadata("design:paramtypes", [Router,
-            AlertController,
-            ClientService,
-            SalesService])
-    ], SaleSearchClientPage);
-    return SaleSearchClientPage;
+            PlatformsService,
+            SalesService,
+            AlertController])
+    ], SaleSearchPlatformPage);
+    return SaleSearchPlatformPage;
 }());
-export { SaleSearchClientPage };
-//# sourceMappingURL=sale-search-client.page.js.map
+export { SaleSearchPlatformPage };
+//# sourceMappingURL=sale-search-platform.page.js.map

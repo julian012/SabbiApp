@@ -15,18 +15,21 @@ import {Camera} from '@ionic-native/camera/ngx';
 import {ReportPage} from './report/report.page';
 import {ModalSaleDetailComponent} from './sales/modal-sale-detail/modal-sale-detail.component';
 import { HTTP } from '@ionic-native/http/ngx';
+import {ProgressBarComponent, ProgressBarModule} from 'angular-progress-bar';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Screenshot } from '@ionic-native/screenshot/ngx';
 
 @NgModule({
   declarations: [AppComponent, ReportPage, ModalSaleDetailComponent],
-  entryComponents: [ReportPage, ModalSaleDetailComponent],
+  entryComponents: [ReportPage, ModalSaleDetailComponent, ProgressBarComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ProgressBarModule,
+
   ],
   providers: [
     StatusBar,

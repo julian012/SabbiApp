@@ -9,7 +9,23 @@ import {HTTP_URL} from '../models/httpStatus';
 })
 export class PlatformsService {
 
+    private platformList : PlatformModel[] = [];
+
     constructor(private http: HttpClient) {
+    }
+
+    public loadPlatforms() {
+        if (!this.platformList[0]) {
+            this.getDataPlatforms().subscribe(res => {
+                    this.platformList = res;
+                },
+                (error: any) => {
+                });
+        }
+    }
+
+    public getPlatforms(){
+        return this.platformList;
     }
 
     public getDataPlatforms(): Observable<PlatformModel[]> {

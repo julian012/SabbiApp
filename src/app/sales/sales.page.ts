@@ -40,7 +40,7 @@ export class SalesPage implements OnInit {
     });
   }
 
-  public getImage(name: string){
+  public getImage(name: string) {
     return 'https://logo.clearbit.com/' + name + '.com';
   }
 

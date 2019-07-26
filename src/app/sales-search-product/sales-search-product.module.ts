@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IonicModule } from '@ionic/angular';
 
-import { SaleSearchClientPage } from './sale-search-client.page';
+import { SalesSearchProductPage } from './sales-search-product.page';
 import {ProgressBarModule} from 'angular-progress-bar';
 
 const routes: Routes = [
   {
     path: '',
-    component: SaleSearchClientPage
+    component: SalesSearchProductPage
   }
 ];
 
@@ -20,9 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ProgressBarModule,
-
+    ProgressBarModule
   ],
-  declarations: [SaleSearchClientPage]
+  declarations: [SalesSearchProductPage]
 })
-export class SaleSearchClientPageModule {}
+export class SalesSearchProductPageModule {}
