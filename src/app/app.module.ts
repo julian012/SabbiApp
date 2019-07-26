@@ -13,24 +13,33 @@ import { ReactiveFormsModule} from '@angular/forms';
 import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
 import {Camera} from '@ionic-native/camera/ngx';
 import {ReportPage} from './report/report.page';
-import {BillComponent} from './bill/bill.component';
+import {ModalSaleDetailComponent} from './sales/modal-sale-detail/modal-sale-detail.component';
+import { HTTP } from '@ionic-native/http/ngx';
+import {ProgressBarComponent, ProgressBarModule} from 'angular-progress-bar';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Screenshot } from '@ionic-native/screenshot/ngx';
 
 @NgModule({
-  declarations: [AppComponent, ReportPage, BillComponent],
-  entryComponents: [ReportPage, BillComponent],
+  declarations: [AppComponent, ReportPage, ModalSaleDetailComponent],
+  entryComponents: [ReportPage, ModalSaleDetailComponent, ProgressBarComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ProgressBarModule,
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
     HttpClient,
+    HTTP,
     PhotoViewer,
     Camera,
+    ScreenOrientation,
+    Screenshot,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig }
   ],

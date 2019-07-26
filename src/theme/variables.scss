@@ -96,6 +96,20 @@
   --ion-color-salmon-contrast-rgb: 255,255,255;
   --ion-color-salmon-shade: #d16866;
   --ion-color-salmon-tint: #f08482;
+
+  --ion-color-platform: #151E3F;
+  --ion-color-platform-rgb: 21,30,63;
+  --ion-color-platform-contrast: #ffffff;
+  --ion-color-platform-contrast-rgb: 255,255,255;
+  --ion-color-platform-shade: #121a37;
+  --ion-color-platform-tint: #2c3552;
+
+  --ion-color-product: #6B7FD7;
+  --ion-color-product-rgb: 107,127,215;
+  --ion-color-product-contrast: #fff;
+  --ion-color-product-contrast-rgb: 255,255,255;
+  --ion-color-product-shade: #5e70bd;
+  --ion-color-product-tint: #7a8cdb;
 }
 
 .ion-color-azul {
@@ -125,6 +139,24 @@
   --ion-color-tint: var(--ion-color-salmon-tint);
 }
 
+.ion-color-platform {
+  --ion-color-base: var(--ion-color-platform);
+  --ion-color-base-rgb: var(--ion-color-platform-rgb);
+  --ion-color-contrast: var(--ion-color-platform-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-platform-contrast-rgb);
+  --ion-color-shade: var(--ion-color-platform-shade);
+  --ion-color-tint: var(--ion-color-platform-tint);
+}
+
+.ion-color-product {
+  --ion-color-base: var(--ion-color-product);
+  --ion-color-base-rgb: var(--ion-color-product-rgb);
+  --ion-color-contrast: var(--ion-color-product-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-product-contrast-rgb);
+  --ion-color-shade: var(--ion-color-product-shade);
+  --ion-color-tint: var(--ion-color-product-tint);
+}
+
 .modalClientInfo .modal-wrapper{
   top: 10%;
   left: 5%;
@@ -148,6 +180,20 @@
   display: block;
   border-radius: 8px;
 }
+
+.modalSaleDetailInfo .modal-wrapper{
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  bottom: 00%;
+  right: 0%;
+  width: 100%;
+  position: absolute;
+  display: block;
+  border-radius: 8px;
+}
+
+
 
 $colors: (
         primary:    #488aff,

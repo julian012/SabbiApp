@@ -59,8 +59,8 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="10" offset="1">
-        <table id="table">
+      <ion-col size="11" offset="0.5">
+        <table id="table" width="100%">
           <thead>
           <tr id="table">
             <th>Fecha</th>
@@ -72,7 +72,7 @@
           <tr *ngFor="let sale of salesClient" class="ion-text-center" id="table">
             <td>{{getDate(sale.sale_date)}}</td>
             <td>{{this.pathImage.get(sale.id_platform)}}</td>
-            <td><ion-button color="primary" (click)="showModal(sale.id_sale)">Detalles</ion-button></td>
+            <td align="center"> <ion-button color="success" size="small" (click)="showModal(sale.id_sale)">Detalles</ion-button></td>
           </tr>
           </tbody>
         </table>

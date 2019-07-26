@@ -14,4 +14,9 @@ export class ReportService {
   public getDescriptionSale(id_sale: number): Observable<SaleDescriptionModel[]> {
     return this.http.post<SaleDescriptionModel[]>(HTTP_URL + '/report/sale', {id_sale});
   }
+
+  //Obtener fecha, plataforma y precio de venta
+  public getPreliminarList(): Observable<any[]> {
+    return this.http.get<any[]>(HTTP_URL + '/report/sales');
+  }
 }

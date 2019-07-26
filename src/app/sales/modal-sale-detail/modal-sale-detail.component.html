@@ -1,10 +1,20 @@
-<html>
-<body>
-<table style="border: solid; width: 520px; border-collapse: collapse" >
+<ion-header>
+  <ion-toolbar color="success">
+      <ion-icon name="arrow-round-back" class="larger" slot="start" (click)="dismiss()"></ion-icon>
+    <ion-title>
+      Detalles de la compra
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="cloud-download" class="larger" (click)="capture()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content scroll-x>
+<table style="border: solid; width: 520px; border-collapse: collapse; font-family: Arial; font-size: 12px" align="center">
   <tr style="border: solid; border-bottom: none">
-    <td colspan="2" background = "Logo.png">
+    <td colspan="2">
       <div style="width: 240px">
-        <img src="https://res.cloudinary.com/donkqe9gl/image/upload/v1563857082/sabbiApp/Logo_xoihzu.jpg" width="100%">
+        <img src="https://res.cloudinary.com/donkqe9gl/image/upload/v1563857082/sabbiApp/Logo_xoihzu.jpg" width="80%">
       </div>
     </td>
     <td colspan="3">
@@ -17,7 +27,7 @@
           </tr>
           <tr>
             <td colspan="3" style="border-bottom: solid">
-              0{{sale.id_sale}}
+              0{{saleInfo[0].id_sale}}
             </td>
           </tr>
           <tr>
@@ -47,8 +57,8 @@
     <td colspan="3" style="font-weight: bold">CC/NIT:</td>
   </tr>
   <tr style="border-collapse: collapse">
-    <td colspan="2" style="width: 100px; border-right: solid">{{sale[0].first_name}} {{sale[0].last_name}}</td>
-    <td colspan="3"> {{sale[0].document_user | number}}</td>
+    <td colspan="2" style="width: 100px; border-right: solid">{{saleInfo[0].first_name}} {{saleInfo[0].last_name}}</td>
+    <td colspan="3"> {{saleInfo[0].document_user | number}}</td>
   </tr>
   <tr style="border-collapse: collapse; border-top: solid">
     <td colspan="5"><br></td>
@@ -59,11 +69,11 @@
     <td style="border-right: solid" colspan="1"><font color="white"><b>Valor</b></font></td>
     <td style="border-right: solid" colspan="1"><font color="white"><b>Total</b></font></td>
   </tr>
-  <tr style="border-top: solid; text-align: center" *ngFor="let s of sale">
-    <td style="border-right: solid" colspan="1">{{s.quantity}}</td>
-    <td style="border-right: solid" colspan="2">{{s.name_garment}} {{s.name_product}} {{s.name_trademark}} talla {{s.size_product}}</td>
-    <td style="border-right: solid" colspan="1">${{s.price_product | number}}</td>
-    <td style="border-right: solid" colspan="1">${{(s.price_product * s.quantity) | number}}</td>
+  <tr style="border-top: solid; text-align: center" *ngFor="let sale of saleInfo">
+    <td style="border-right: solid" colspan="1">{{sale.quantity}}</td>
+    <td style="border-right: solid" colspan="2">{{sale.name_garment}} {{sale.name_product}} {{sale.name_trademark}} talla {{sale.size_product}}</td>
+    <td style="border-right: solid" colspan="1">${{sale.price_product | number}}</td>
+    <td style="border-right: solid" colspan="1">${{(sale.price_product * sale.quantity) | number}}</td>
   </tr>
   <tr>
     <td colspan="3" style="border-top: solid; word-wrap:break-word; border-right: solid; border-bottom: solid"><b>Valor en letras:</b> {{getTotalString()}} M/CTE</td>
@@ -96,6 +106,4 @@
     <td colspan="2" style="border-right: solid; border-bottom: solid"></td>
   </tr>
 </table>
-
-</body>
-</html>
+</ion-content>
