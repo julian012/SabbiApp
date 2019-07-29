@@ -15,6 +15,7 @@ export class ProductsPage implements OnInit {
 
     public dataProducts = new Array<ProductModel>();
     public result;
+    public values = '';
 
     constructor(public productsService: ProductsService, private modalController: ModalController) {
     }
@@ -46,6 +47,7 @@ export class ProductsPage implements OnInit {
                         }
                     });
                 });
+                this.productsService.setProdcutList(this.dataProducts);
             }, (error: any) => {
                 console.log(error.message);
             }
@@ -75,5 +77,9 @@ export class ProductsPage implements OnInit {
         await modal.present();
         const {data} = await modal.onDidDismiss();
         console.log(data);
+    }
+
+    filter() {
+        this.dataProducts = this.productsService.filterClients(this.values);
     }
 }

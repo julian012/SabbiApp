@@ -362,6 +362,22 @@ module.exports = [
         "merges": [
             "navigator.screenshot"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation",
+        "pluginId": "cordova-plugin-screen-orientation",
+        "clobbers": [
+            "cordova.plugins.screenorientation"
+        ]
+    },
+    {
+        "file": "plugins/com.darktalker.cordova.screenshot/www/Screenshot.js",
+        "id": "com.darktalker.cordova.screenshot.screenshot",
+        "pluginId": "com.darktalker.cordova.screenshot",
+        "merges": [
+            "navigator.screenshot"
+        ]
     }
 ];
 module.exports.metadata = 

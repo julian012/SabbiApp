@@ -10,14 +10,14 @@
 </ion-header>
 
 <ion-content>
-    <ion-searchbar placeholder="Nombre del producto" color="danger"></ion-searchbar>
+    <ion-searchbar placeholder="Nombre del producto" (ionChange)="filter()" [(ngModel)]="values"  color="danger"></ion-searchbar>
     <ion-card *ngFor="let product of dataProducts">
         <ion-grid>
             <ion-row>
                 <ion-col>
-                    <img *ngIf="product.photos === null" src="https://image.flaticon.com/icons/svg/1906/1906227.svg"
+                    <img *ngIf="product.photos === null" width="100" height="200" src="https://image.flaticon.com/icons/svg/1906/1906227.svg"
                          alt="Producto"/>
-                    <img *ngIf="product.photos !== null" [src]="product.photos[0].path_photo" alt="Producto"/>
+                    <img *ngIf="product.photos !== null" width="100" height="200" [src]="product.photos[0].path_photo" alt="Producto"/>
                 </ion-col>
                 <ion-col>
                     <ion-card-content>
@@ -27,7 +27,7 @@
                         Precio: {{product.prices[0].price_product}} <br>
                         Cantidad: {{product.prices[0].quantity}} <br>
                         Talla: {{product.prices[0].size_product}} <br>
-                        Fecha: {{product.prices[0].date} <br>
+                        Fecha: {{product.prices[0].date}} <br>
                         Género: {{product.gender_product}}
                     </ion-card-content>
                 </ion-col>

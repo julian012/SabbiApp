@@ -11,6 +11,8 @@ import {ProductPriceModel} from '../models/ProductPrice.model';
 })
 export class ProductsService {
 
+    public productsList: ProductModel[] = [];
+
     constructor(private http: HttpClient) {
     }
 
@@ -24,5 +26,26 @@ export class ProductsService {
 
     public getProductPrice(): Observable<ProductPriceModel[]> {
         return this.http.get<ProductPriceModel[]>(HTTP_URL + '/product_price');
+    }
+
+    setProdcutList(products: ProductModel[]) {
+        this.productsList = products;
+    }
+
+    public filterClients(value: string) {
+        let list = [];
+        if (value === '') {
+            list = this.productsList;
+        } else {
+            list = this.filterItems(value);
+        }
+        return list;
+    }
+
+    public filterItems(value: string) {
+        return this.productsList.filter( product => {
+            const fullName = product.name_product.toLowerCase();
+            return fullName.indexOf(value.toLowerCase()) > -1;
+        });
     }
 }

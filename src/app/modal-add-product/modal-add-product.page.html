@@ -63,12 +63,10 @@
                             </ng-container>
                         </div>
                     </ion-row>
-                    <ion-row>
-                        <ion-item>
-                            <ion-label class="label-form" position="floating">Precio</ion-label>
-                            <ion-input type="number" formControlName="price"></ion-input>
-                        </ion-item>
-                    </ion-row>
+                    <ion-item>
+                        <ion-label class="label-form" position="floating">Precio</ion-label>
+                        <ion-input type="number" formControlName="price"></ion-input>
+                    </ion-item>
                     <ion-row>
                         <div class="error-messages">
                             <ng-container *ngFor="let error of errorMessages.price">
@@ -85,16 +83,14 @@
                             <ion-label>Utilidad</ion-label>
                         </ion-col>
                         <ion-range min="0" max="100" step="10" snaps="true" ticks="false" color="success"
-                                   [(ngModel)]="dataProduct.utility_product"
+                                   [(ngModel)]="priceProduct.utility"
                                    [ngModelOptions]="{standalone: true}"></ion-range>
-                        <ion-input color="medium" disabled="true">{{ dataProduct.utility_product }}%</ion-input>
+                        <ion-input color="medium" disabled="true">{{ priceProduct.utility }}%</ion-input>
                     </ion-row>
-                    <ion-row>
-                        <ion-item>
-                            <ion-label class="label-form" position="floating">Talla</ion-label>
-                            <ion-input type="text" formControlName="size"></ion-input>
-                        </ion-item>
-                    </ion-row>
+                    <ion-item>
+                        <ion-label class="label-form" position="floating">Talla</ion-label>
+                        <ion-input type="text" formControlName="size"></ion-input>
+                    </ion-item>
                     <ion-row>
                         <div class="error-messages">
                             <ng-container *ngFor="let error of errorMessages.size">

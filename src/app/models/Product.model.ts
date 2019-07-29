@@ -10,5 +10,4 @@ export class ProductModel {
     public status_product: string;
     public photos = new Array<PhotoModel>();
     public prices = new Array<ProductPriceModel>();
-    public date: Date;
 }

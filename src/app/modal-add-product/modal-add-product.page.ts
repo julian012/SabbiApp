@@ -18,6 +18,7 @@ import {ERRORMESSAGES_PRODUCT} from '../models/httpStatus';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import {PhotoViewer} from '@ionic-native/photo-viewer/ngx';
 import {ModalAddProductService} from './modal-add-product.service';
+import {ProductPriceModel} from '../models/ProductPrice.model';
 
 @Component({
     selector: 'app-modal-add-product',
@@ -29,6 +30,7 @@ export class ModalAddProductPage implements OnInit {
     public MESSAGE_CANCEL_ADD = '¿Seguro desea cancelar?';
     public MESSAGE_CONFIRM_ADD = '¿Seguro desea agregar el producto?';
     public dataProduct: ProductModel;
+    public priceProduct: ProductPriceModel;
     public productForm: FormGroup;
     public trademarkPickerList: Array<{ text, value }>;
     public garmentPickerList: Array<{ text, value }>;
@@ -49,8 +51,9 @@ export class ModalAddProductPage implements OnInit {
                 private photoViewer: PhotoViewer, private addProductService: ModalAddProductService,
                 private loadingCtrl: LoadingController) {
         this.dataProduct = new ProductModel();
+        this.priceProduct = new ProductPriceModel();
+        this.priceProduct.utility = 0;
         this.dataProduct.gender_product = 'M';
-        this.dataProduct.utility_product = 0;
         this.createProductForm();
         this.trademark = new TrademarkModel();
         this.garment = new GarmentModel();
@@ -138,14 +141,24 @@ export class ModalAddProductPage implements OnInit {
 
     sendProduct() {
         this.dataProduct.name_product = this.productForm.value.name;
-        this.dataProduct.price_product = this.productForm.value.price;
         this.dataProduct.status_product = 'A';
         this.dataProduct.gender_product = this.productForm.value.gender;
-        this.dataProduct.quantity = this.productForm.value.quantity;
-        this.dataProduct.date = new Date();
-        this.dataProduct.size_product = this.productForm.value.size;
         console.log(this.dataProduct);
         this.addProductService.createProduct(this.dataProduct).subscribe(res => {
+            this.sendPriceProduct(res);
+        }, (error) => {
+            this.showMessage('Mensaje', 'Modificar producto',
+                'El producto no se pudo agregar. Existe un problema en la conexión.');
+        });
+    }
+
+    sendPriceProduct(resProduct) {
+        this.priceProduct.price_product = this.productForm.value.price;
+        this.priceProduct.quantity = this.productForm.value.quantity;
+        this.priceProduct.date = new Date();
+        this.priceProduct.size_product = this.productForm.value.size;
+        this.priceProduct.id_product = resProduct.id_product;
+        this.addProductService.createPriceProduct(this.priceProduct).subscribe(res => {
             this.sendImages(res);
         }, (error) => {
             this.showMessage('Mensaje', 'Modificar producto',
@@ -154,7 +167,7 @@ export class ModalAddProductPage implements OnInit {
     }
 
     sendImages(resProduct) {
-        this.saveProductkLoading();
+        this.saveProductLoading();
         this.map.forEach(img => {
             this.addProductService.addProductImage({
                 id_product: resProduct.id_product,
@@ -172,7 +185,7 @@ export class ModalAddProductPage implements OnInit {
         });
     }
 
-    async saveProductkLoading() {
+    async saveProductLoading() {
         const loading = await this.loadingCtrl.create({
             message: 'Procesando',
             duration: 2000
