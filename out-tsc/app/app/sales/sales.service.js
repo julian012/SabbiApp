@@ -39,6 +39,14 @@ var SalesService = /** @class */ (function () {
     SalesService.prototype.cleanSaleForm = function () {
         this.saleFormModel = new SaleFormModel();
     };
+    //Obtener los productos con cantidad disponible
+    SalesService.prototype.getAvailabilityProduct = function () {
+        return this.http.get(HTTP_URL + '/report/product');
+    };
+    //Obtener las cantidades con las fotos de los productos
+    SalesService.prototype.getProductPrices = function (id_product) {
+        return this.http.post(HTTP_URL + '/report/product_price', { id_product: id_product });
+    };
     SalesService = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

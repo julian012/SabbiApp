@@ -53,5 +53,17 @@ export class SalesService {
   public cleanSaleForm() {
     this.saleFormModel = new SaleFormModel();
   }
+
+  //Obtener los productos con cantidad disponible
+  public getAvailabilityProduct(): Observable<any[]> {
+    return this.http.get<any[]>(HTTP_URL +  '/report/product');
+  }
+
+  //Obtener las cantidades con las fotos de los productos
+  public getProductPrices(id_product: number): Observable<any[]> {
+    return this.http.post<any[]>(HTTP_URL + '/report/product_price', {id_product});
+  }
+
+
 }
 

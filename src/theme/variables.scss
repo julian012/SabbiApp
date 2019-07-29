@@ -110,6 +110,13 @@
   --ion-color-product-contrast-rgb: 255,255,255;
   --ion-color-product-shade: #5e70bd;
   --ion-color-product-tint: #7a8cdb;
+
+  --ion-color-productopction: #202A25;
+  --ion-color-productopction-rgb: 32,42,37;
+  --ion-color-productopction-contrast: #ffffff;
+  --ion-color-productopction-contrast-rgb: 255,255,255;
+  --ion-color-productopction-shade: #1c2521;
+  --ion-color-productopction-tint: #363f3b;
 }
 
 .ion-color-azul {
@@ -157,6 +164,16 @@
   --ion-color-tint: var(--ion-color-product-tint);
 }
 
+.ion-color-productopction {
+  --ion-color-base: var(--ion-color-productopction);
+  --ion-color-base-rgb: var(--ion-color-productopction-rgb);
+  --ion-color-contrast: var(--ion-color-productopction-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-productopction-contrast-rgb);
+  --ion-color-shade: var(--ion-color-productopction-shade);
+  --ion-color-tint: var(--ion-color-productopction-tint);
+}
+
+
 .modalClientInfo .modal-wrapper{
   top: 10%;
   left: 5%;
@@ -192,6 +209,19 @@
   display: block;
   border-radius: 8px;
 }
+
+.modalSearchProduct .modal-wrapper{
+  top: 10%;
+  left: 5%;
+  height: 80%;
+  bottom: 10%;
+  right: 5%;
+  width: 90%;
+  position: absolute;
+  display: block;
+  border-radius: 8px;
+}
+
 
 
 

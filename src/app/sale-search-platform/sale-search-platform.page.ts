@@ -64,4 +64,5 @@ export class SaleSearchPlatformPage implements OnInit {
     await alert.present();
   }
 
+
 }

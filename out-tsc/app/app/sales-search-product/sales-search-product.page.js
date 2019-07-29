@@ -2,15 +2,22 @@ import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SalesService } from '../sales/sales.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { SalesSearchProductModalComponent } from '../sales-search-product-modal/sales-search-product-modal.component';
 var SalesSearchProductPage = /** @class */ (function () {
-    function SalesSearchProductPage(router, dataSaleService, alertCtrl) {
+    function SalesSearchProductPage(router, dataSaleService, alertCtrl, modal) {
         this.router = router;
         this.dataSaleService = dataSaleService;
         this.alertCtrl = alertCtrl;
+        this.modal = modal;
         this.disabled = true;
+        this.productList = [];
     }
     SalesSearchProductPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataSaleService.getAvailabilityProduct().subscribe(function (res) {
+            _this.productList = res;
+        });
     };
     SalesSearchProductPage.prototype.comeback = function () {
         this.router.navigate(['/sale-search-platform']);
@@ -48,6 +55,41 @@ var SalesSearchProductPage = /** @class */ (function () {
             });
         });
     };
+    SalesSearchProductPage.prototype.getIcon = function (gender) {
+        if (gender.toLowerCase() === 'm') {
+            return 'man';
+        }
+        else {
+            return 'woman';
+        }
+    };
+    SalesSearchProductPage.prototype.selectProduct = function (product) {
+        console.log('Selecciono' + product.name_product);
+        this.selectProductOption(product);
+    };
+    SalesSearchProductPage.prototype.selectProductOption = function (product) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var modal;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.modal.create({
+                            component: SalesSearchProductModalComponent,
+                            cssClass: 'modalSearchProduct',
+                            componentProps: {
+                                productInfo: product,
+                                saleSearchPage: this
+                            },
+                        })];
+                    case 1:
+                        modal = _a.sent();
+                        return [4 /*yield*/, modal.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SalesSearchProductPage = tslib_1.__decorate([
         Component({
             selector: 'app-sales-search-product',
@@ -56,7 +98,8 @@ var SalesSearchProductPage = /** @class */ (function () {
         }),
         tslib_1.__metadata("design:paramtypes", [Router,
             SalesService,
-            AlertController])
+            AlertController,
+            ModalController])
     ], SalesSearchProductPage);
     return SalesSearchProductPage;
 }());

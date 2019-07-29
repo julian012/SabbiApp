@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="productopction">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">
+          <ion-title>{{productInfo.name_garment}} {{ productInfo.name_product }}</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="11" offset="0.5" text-center>
+        <ion-label color="medium" style="font-size: 150%"> Elige entre alguno de los precios</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="11" offset="0.5" text-center>
+
+          <ion-radio-group>
+            <ng-container *ngFor="let product of productPriceList">
+              <ion-row>
+                <ion-col size="3" offset="0.5">
+                  <img [src]="product.path_photo" width="100%">
+                </ion-col>
+                <ion-col size="7">
+                  <ion-row>
+                    <ion-col size="12">
+                      Precio: ${{product.price_product | number}}
+                    </ion-col>
+                    <ion-col size="12">
+                      Cantidad: {{product.quantity}}
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-radio></ion-radio>
+                </ion-col>
+              </ion-row>
+            </ng-container>
+          </ion-radio-group>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer >
+  <ion-button expand="full" color="productopction" slot="fixed" size="large" [disabled]="disabled" >Seleccionar</ion-button>
+</ion-footer>
