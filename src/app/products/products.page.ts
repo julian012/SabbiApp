@@ -3,6 +3,8 @@ import {ProductsService} from './products.service';
 import {ProductModel} from '../models/Product.model';
 import {ModalController} from '@ionic/angular';
 import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
+import {PhotoModel} from '../models/Photo.model';
+import {ProductPriceModel} from '../models/ProductPrice.model';
 
 @Component({
     selector: 'app-products',
@@ -25,6 +27,7 @@ export class ProductsPage implements OnInit {
         this.productsService.getDataProduct().subscribe(res => {
                 this.dataProducts = res;
                 this.getImages();
+                this.getPrices();
                 console.log(this.dataProducts);
             }, (error: any) => {
                 this.dataProducts = new Array<ProductModel>();
@@ -34,16 +37,35 @@ export class ProductsPage implements OnInit {
     }
 
     getImages() {
-        this.dataProducts.forEach(product => {
-            this.productsService.getProductImage(product.id_product).subscribe(res => {
-                    // product.url.push(res);
-                    console.log(product.url);
-                }, (error: any) => {
-                    console.log(error.message);
-                }
-            );
-        });
+        this.productsService.getProductImage().subscribe(res => {
+                this.dataProducts.forEach(product => {
+                    product.photos = new Array<PhotoModel>();
+                    res.forEach(photo => {
+                        if (photo.id_product === product.id_product) {
+                            product.photos.push(photo);
+                        }
+                    });
+                });
+            }, (error: any) => {
+                console.log(error.message);
+            }
+        );
+    }
 
+    getPrices() {
+        this.productsService.getProductPrice().subscribe(res => {
+                this.dataProducts.forEach(product => {
+                    product.prices = new Array<ProductPriceModel>();
+                    res.forEach(price => {
+                        if (price.id_product === product.id_product) {
+                            product.prices.push(price);
+                        }
+                    });
+                });
+            }, (error: any) => {
+                console.log(error.message);
+            }
+        );
     }
 
     async addProductPage() {

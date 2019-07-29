@@ -64,20 +64,20 @@
                         </div>
                     </ion-row>
                     <ion-row>
-                        <ion-col>
-                            <ion-item>
-                                <ion-label class="label-form" position="floating">Precio</ion-label>
-                                <ion-input type="number" formControlName="price"></ion-input>
-                            </ion-item>
-                            <div class="error-messages">
-                                <ng-container *ngFor="let error of errorMessages.price">
-                                    <div class="error-message"
-                                         *ngIf="productForm.get('price').hasError(error.type) && (productForm.get('price').dirty || productForm.get('price').touched)">
-                                        {{error.message}}
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </ion-col>
+                        <ion-item>
+                            <ion-label class="label-form" position="floating">Precio</ion-label>
+                            <ion-input type="number" formControlName="price"></ion-input>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of errorMessages.price">
+                                <div class="error-message"
+                                     *ngIf="productForm.get('price').hasError(error.type) && (productForm.get('price').dirty || productForm.get('price').touched)">
+                                    {{error.message}}
+                                </div>
+                            </ng-container>
+                        </div>
                     </ion-row>
                     <ion-row>
                         <ion-col text-center size="3">
@@ -90,20 +90,20 @@
                         <ion-input color="medium" disabled="true">{{ dataProduct.utility_product }}%</ion-input>
                     </ion-row>
                     <ion-row>
-                        <ion-col>
-                            <ion-item>
-                                <ion-label class="label-form" position="floating">Talla</ion-label>
-                                <ion-input type="text" formControlName="size"></ion-input>
-                            </ion-item>
-                            <div class="error-messages">
-                                <ng-container *ngFor="let error of errorMessages.size">
-                                    <div class="error-message"
-                                         *ngIf="productForm.get('size').hasError(error.type) && (productForm.get('size').dirty || productForm.get('size').touched)">
-                                        {{error.message}}
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </ion-col>
+                        <ion-item>
+                            <ion-label class="label-form" position="floating">Talla</ion-label>
+                            <ion-input type="text" formControlName="size"></ion-input>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of errorMessages.size">
+                                <div class="error-message"
+                                     *ngIf="productForm.get('size').hasError(error.type) && (productForm.get('size').dirty || productForm.get('size').touched)">
+                                    {{error.message}}
+                                </div>
+                            </ng-container>
+                        </div>
                     </ion-row>
                     <ion-row>
                         <ion-col>
