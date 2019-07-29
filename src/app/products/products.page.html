@@ -10,17 +10,29 @@
 </ion-header>
 
 <ion-content>
-    <ion-searchbar placeholder="Ionic" color="danger"></ion-searchbar>
+    <ion-searchbar placeholder="Nombre del producto" (ionChange)="filter()" [(ngModel)]="values"  color="danger"></ion-searchbar>
     <ion-card *ngFor="let product of dataProducts">
-        <img src="https://image.flaticon.com/icons/svg/1906/1906227.svg" alt="Producto"/>
-        <ion-card-content>
-            <ion-card-title>
-                {{product.name_product}}
-            </ion-card-title>
-            <p> {{product.price_product}} </p>
-            {{product.size_product}} <br>
-            {{product.gender_product}}<br>
-        </ion-card-content>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <img *ngIf="product.photos === null" width="100" height="200" src="https://image.flaticon.com/icons/svg/1906/1906227.svg"
+                         alt="Producto"/>
+                    <img *ngIf="product.photos !== null" width="100" height="200" [src]="product.photos[0].path_photo" alt="Producto"/>
+                </ion-col>
+                <ion-col>
+                    <ion-card-content>
+                        <ion-card-title>
+                            {{product.name_product}}
+                        </ion-card-title>
+                        Precio: {{product.prices[0].price_product}} <br>
+                        Cantidad: {{product.prices[0].quantity}} <br>
+                        Talla: {{product.prices[0].size_product}} <br>
+                        Fecha: {{product.prices[0].date}} <br>
+                        Género: {{product.gender_product}}
+                    </ion-card-content>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-card>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addProductPage()">
