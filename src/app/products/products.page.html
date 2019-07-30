@@ -11,7 +11,7 @@
 
 <ion-content>
     <ion-searchbar placeholder="Nombre del producto" (ionChange)="filter()" [(ngModel)]="values"  color="danger"></ion-searchbar>
-    <ion-card *ngFor="let product of dataProducts">
+    <ion-card *ngFor="let product of dataProducts" (click)="showDesc(product)">
         <ion-grid>
             <ion-row>
                 <ion-col>

@@ -5,6 +5,7 @@ import {ModalController} from '@ionic/angular';
 import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
 import {PhotoModel} from '../models/Photo.model';
 import {ProductPriceModel} from '../models/ProductPrice.model';
+import {ProductDetailPage} from './product-detail/product-detail.page';
 
 @Component({
     selector: 'app-products',
@@ -81,5 +82,15 @@ export class ProductsPage implements OnInit {
 
     filter() {
         this.dataProducts = this.productsService.filterClients(this.values);
+    }
+
+    async showDesc(productInfo: ProductModel) {
+        const modal = await this.modalController.create({
+            component: ProductDetailPage,
+            componentProps: {
+                product: productInfo
+            }
+        });
+        await modal.present();
     }
 }

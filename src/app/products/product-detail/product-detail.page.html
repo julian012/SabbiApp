@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-toolbar color="product">
+        <ion-buttons slot="start" (click)="exit()">
+            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-buttons>
+        <ion-title>
+            {{product.name_product}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides>
+        <ion-slide *ngFor="let img of product.photos">
+            <img [src]="img.path_photo" height="50" width="100" alt="">
+        </ion-slide>
+    </ion-slides>
+    <ion-card>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-item>
+                            <label>Prenda: {{garment.name_garment}}</label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-item>
+                            <label>Marca: {{trademark.name_trademark}}</label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        <label>Género: </label>
+                        <ion-icon name="woman" *ngIf="product.gender_product === 'F'"></ion-icon>
+                        <ion-icon name="man" *ngIf="product.gender_product === 'M'">></ion-icon>
+                        <label *ngIf="product.gender_product === 'F'">Femenino</label>
+                        <label *ngIf="product.gender_product === 'M'">Masculino</label>
+                    </ion-item>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <ion-list>
+        <ion-list-header>
+            <h1>Productos</h1>
+        </ion-list-header>
+        <ion-item *ngFor="let priceProduct of product.prices">
+            <ion-label>
+                <h2>Fecha: {{priceProduct.date}}</h2>
+                <h3>Precio: {{priceProduct.price_product}}</h3>
+                <p>Cantidad: {{priceProduct.quantity}}</p>
+                <p>Utilidad: {{priceProduct.utility}}</p>
+                <p>Talla: {{priceProduct.size_product}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

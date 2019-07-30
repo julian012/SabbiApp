@@ -9,6 +9,8 @@ import {ProductsPage} from './products.page';
 import {HttpClientModule} from '@angular/common/http';
 import {ModalAddProductPage} from '../modal-add-product/modal-add-product.page';
 import {ModalAddProductPageModule} from '../modal-add-product/modal-add-product.module';
+import {ProductDetailPage} from './product-detail/product-detail.page';
+import {ProductDetailPageModule} from './product-detail/product-detail.module';
 
 const routes: Routes = [
     {
@@ -19,7 +21,8 @@ const routes: Routes = [
 
 @NgModule({
     entryComponents: [
-      ModalAddProductPage
+      ModalAddProductPage,
+        ProductDetailPage
     ],
     imports: [
         CommonModule,
@@ -27,7 +30,8 @@ const routes: Routes = [
         IonicModule,
         HttpClientModule,
         RouterModule.forChild(routes),
-        ModalAddProductPageModule
+        ModalAddProductPageModule,
+        ProductDetailPageModule
     ],
     declarations: [ProductsPage]
 })
