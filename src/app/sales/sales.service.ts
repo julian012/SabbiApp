@@ -50,6 +50,10 @@ export class SalesService {
     this.saleFormModel.name_platform = platform.name_platform;
   }
 
+  public setPriceProductInfo(productPrice: any[]) {
+    this.saleFormModel.priceProduct = productPrice;
+  }
+
   public cleanSaleForm() {
     this.saleFormModel = new SaleFormModel();
   }
@@ -63,6 +67,32 @@ export class SalesService {
   public getProductPrices(id_product: number): Observable<any[]> {
     return this.http.post<any[]>(HTTP_URL + '/report/product_price', {id_product});
   }
+
+  public getSaleFormModel(){
+    return this.saleFormModel;
+  }
+  //Realizar venta
+  public makeSale(sale: SaleModel): Observable<any>{
+    return this.http.post<any>(HTTP_URL + '/sale', sale);
+  }
+
+  //Agregar prodcutos a la venta
+  public addProductsToSale(infoSale: any, id_sale: number): Observable<any>{
+    console.log(infoSale);
+    return this.http.post<any>( HTTP_URL + '/sale_product', {
+      id_sale,
+      id_product: infoSale.id_product,
+      id_product_price: infoSale.id_product_price,
+      quantity: infoSale.quantity_select,
+      sale_price: infoSale.price_product
+    });
+  }
+
+  //Descontar los productos comprados en el inventario
+  public updateProductPriceList(id_product_price: number, quantity: number): Observable<any> {
+    return this.http.put<any>( HTTP_URL + '/product_price', { id_product_price, quantity});
+  }
+
 
 
 }

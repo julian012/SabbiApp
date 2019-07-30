@@ -12,6 +12,7 @@ var SalesSearchProductPage = /** @class */ (function () {
         this.modal = modal;
         this.disabled = true;
         this.productList = [];
+        this.idPriceList = [];
     }
     SalesSearchProductPage.prototype.ngOnInit = function () {
         var _this = this;
@@ -64,8 +65,10 @@ var SalesSearchProductPage = /** @class */ (function () {
         }
     };
     SalesSearchProductPage.prototype.selectProduct = function (product) {
-        console.log('Selecciono' + product.name_product);
-        this.selectProductOption(product);
+        if (!product.status_product) {
+            console.log('Selecciono' + product.name_product);
+            this.selectProductOption(product);
+        }
     };
     SalesSearchProductPage.prototype.selectProductOption = function (product) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
@@ -89,6 +92,38 @@ var SalesSearchProductPage = /** @class */ (function () {
                 }
             });
         });
+    };
+    SalesSearchProductPage.prototype.getIdProduct = function (productPrice) {
+        console.log('llego ', productPrice);
+        this.modal.dismiss();
+        this.idPriceList.push(productPrice);
+        this.productList.forEach(function (product) {
+            if (product.id_product === productPrice.id_product) {
+                product.status_product = true;
+            }
+        });
+        this.validatePriceProductList();
+    };
+    SalesSearchProductPage.prototype.deleteIdPrice = function (productPrice) {
+        this.idPriceList.splice(productPrice, 1);
+        this.productList.forEach(function (product) {
+            if (product.id_product === productPrice.id_product) {
+                product.status_product = false;
+            }
+        });
+        this.validatePriceProductList();
+    };
+    SalesSearchProductPage.prototype.validatePriceProductList = function () {
+        if (this.idPriceList.length > 0) {
+            this.disabled = false;
+        }
+        else {
+            this.disabled = true;
+        }
+    };
+    SalesSearchProductPage.prototype.sendProductPriceInfo = function () {
+        this.dataSaleService.setPriceProductInfo(this.idPriceList);
+        this.router.navigate(['/sale-confirm']);
     };
     SalesSearchProductPage = tslib_1.__decorate([
         Component({

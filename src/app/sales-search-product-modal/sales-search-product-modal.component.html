@@ -21,31 +21,46 @@
 
           <ion-radio-group>
             <ng-container *ngFor="let product of productPriceList">
-              <ion-row>
-                <ion-col size="3" offset="0.5">
-                  <img [src]="product.path_photo" width="100%">
-                </ion-col>
-                <ion-col size="7">
-                  <ion-row>
-                    <ion-col size="12">
-                      Precio: ${{product.price_product | number}}
-                    </ion-col>
-                    <ion-col size="12">
-                      Cantidad: {{product.quantity}}
-                    </ion-col>
-                  </ion-row>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-radio></ion-radio>
-                </ion-col>
-              </ion-row>
+              <ng-container *ngIf="product.quantity > 0">
+                <ion-row style="align-items: center">
+                  <ion-col size="3" offset="0.5">
+                    <img [src]="product.path_photo" width="110%">
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-row style="align-items: center">
+                      <ion-col size="12">
+                        Disponibles: {{product.quantity}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        Cantidad:
+                      </ion-col>
+                      <ion-col size="2">
+                        <ion-icon name="remove"style="font-size: 75%" (click)="changeQuantity(false, product)"></ion-icon>
+                      </ion-col>
+                      <ion-col size="2">
+                        {{product.quantity_select}}
+                      </ion-col>
+                      <ion-col size="2">
+                        <ion-icon name="add" style="font-size: 75%" (click)="changeQuantity(true, product)"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="12" text-center><b>Precio: ${{product.price_product | number}}</b></ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-radio (click)="getIdPrice(product)"></ion-radio>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
             </ng-container>
           </ion-radio-group>
-
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
 <ion-footer >
-  <ion-button expand="full" color="productopction" slot="fixed" size="large" [disabled]="disabled" >Seleccionar</ion-button>
+  <ion-button expand="full" color="productopction" slot="fixed" size="large" [disabled]="disabled" (click)="sendProductPrice()">Seleccionar</ion-button>
 </ion-footer>

@@ -7,6 +7,7 @@ var SalesSearchProductModalComponent = /** @class */ (function () {
         this.dataSaleService = dataSaleService;
         this.disabled = true;
         this.productPriceList = [];
+        this.quantity = 1;
     }
     SalesSearchProductModalComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -15,6 +16,26 @@ var SalesSearchProductModalComponent = /** @class */ (function () {
             console.log(res);
             _this.productPriceList = res;
         });
+    };
+    SalesSearchProductModalComponent.prototype.getIdPrice = function (product) {
+        this.priceSelected = product;
+        this.disabled = false;
+    };
+    SalesSearchProductModalComponent.prototype.sendProductPrice = function () {
+        this.saleSearchPage.getIdProduct(this.priceSelected);
+    };
+    SalesSearchProductModalComponent.prototype.changeQuantity = function (option, product) {
+        //Agregar
+        if (option) {
+            if (product.quantity_select < product.quantity) {
+                product.quantity_select++;
+            }
+        }
+        else { //Restar
+            if ((product.quantity_select - 1) !== 0) {
+                product.quantity_select--;
+            }
+        }
     };
     tslib_1.__decorate([
         Input(),

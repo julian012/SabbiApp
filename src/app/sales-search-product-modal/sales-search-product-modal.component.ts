@@ -11,6 +11,8 @@ export class SalesSearchProductModalComponent implements OnInit {
 
   public disabled = true;
   public productPriceList: any[] = [];
+  public priceSelected: any;
+  public quantity = 1;
   @Input() productInfo: any;
   @Input() saleSearchPage: SalesSearchProductPage;
   constructor(private dataSaleService: SalesService) {
@@ -24,5 +26,34 @@ export class SalesSearchProductModalComponent implements OnInit {
       this.productPriceList = res;
     });
   }
+
+  public getIdPrice(product: any) {
+    this.priceSelected = product;
+    this.disabled = false;
+  }
+
+  public sendProductPrice() {
+    this.saleSearchPage.getIdProduct(this.priceSelected);
+  }
+
+  public changeQuantity(option: boolean, product: any){
+    //Agregar
+    if (option) {
+      if (product.quantity_select < product.quantity){
+        product.quantity_select++;
+      }
+    } else { //Restar
+      if ((product.quantity_select - 1) !== 0) {
+        product.quantity_select--;
+      }
+    }
+  }
+
+
+
+
+
+
+
 
 }
