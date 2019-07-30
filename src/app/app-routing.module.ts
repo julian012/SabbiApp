@@ -4,7 +4,7 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
@@ -55,7 +55,9 @@ const routes: Routes = [
         loadChildren: './sale-search-client/sale-search-client.module#SaleSearchClientPageModule'
     },
   { path: 'sale-search-platform', loadChildren: './sale-search-platform/sale-search-platform.module#SaleSearchPlatformPageModule' },
-  { path: 'sales-search-product', loadChildren: './sales-search-product/sales-search-product.module#SalesSearchProductPageModule' }
+  { path: 'sales-search-product', loadChildren: './sales-search-product/sales-search-product.module#SalesSearchProductPageModule' },
+  { path: 'sale-confirm', loadChildren: './sale-confirm/sale-confirm.module#SaleConfirmPageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
 ];
 
 @NgModule({

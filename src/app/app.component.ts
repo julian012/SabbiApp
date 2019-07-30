@@ -45,17 +45,13 @@ export class AppComponent {
       url: '/platforms',
       icon: 'basket'
     }, {
-      title: 'Configuración',
+      title: 'Manual de Usuario',
       url: '/settings',
       icon: 'settings'
     }, {
       title: 'Simular compra',
       url: '/simulate',
       icon: 'alert'
-    }, {
-      title: 'Cerrar Sesión',
-      url: '/list',
-      icon: 'exit'
     }
   ];
 

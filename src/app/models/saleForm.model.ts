@@ -5,4 +5,5 @@ export class SaleFormModel {
     last_name: string;
     id_platform: number;
     name_platform: string;
+    priceProduct: any[];
 }

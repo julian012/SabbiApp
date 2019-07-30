@@ -36,6 +36,9 @@ var SalesService = /** @class */ (function () {
         this.saleFormModel.id_platform = platform.id_platform;
         this.saleFormModel.name_platform = platform.name_platform;
     };
+    SalesService.prototype.setPriceProductInfo = function (productPrice) {
+        this.saleFormModel.priceProduct = productPrice;
+    };
     SalesService.prototype.cleanSaleForm = function () {
         this.saleFormModel = new SaleFormModel();
     };
@@ -46,6 +49,28 @@ var SalesService = /** @class */ (function () {
     //Obtener las cantidades con las fotos de los productos
     SalesService.prototype.getProductPrices = function (id_product) {
         return this.http.post(HTTP_URL + '/report/product_price', { id_product: id_product });
+    };
+    SalesService.prototype.getSaleFormModel = function () {
+        return this.saleFormModel;
+    };
+    //Realizar venta
+    SalesService.prototype.makeSale = function (sale) {
+        return this.http.post(HTTP_URL + '/sale', sale);
+    };
+    //Agregar prodcutos a la venta
+    SalesService.prototype.addProductsToSale = function (infoSale, id_sale) {
+        console.log(infoSale);
+        return this.http.post(HTTP_URL + '/sale_product', {
+            id_sale: id_sale,
+            id_product: infoSale.id_product,
+            id_product_price: infoSale.id_product_price,
+            quantity: infoSale.quantity_select,
+            sale_price: infoSale.price_product
+        });
+    };
+    //Descontar los productos comprados en el inventario
+    SalesService.prototype.updateProductPriceList = function (id_product_price, quantity) {
+        return this.http.put(HTTP_URL + '/product_price', { id_product_price: id_product_price, quantity: quantity });
     };
     SalesService = tslib_1.__decorate([
         Injectable({

@@ -14,6 +14,7 @@ export class SalesSearchProductPage implements OnInit {
 
   private disabled = true;
   private productList: any[] = [];
+  private idPriceList: any[] = [];
 
   constructor(private router: Router,
               private dataSaleService: SalesService,
@@ -63,8 +64,10 @@ export class SalesSearchProductPage implements OnInit {
 
 
   public selectProduct(product: any) {
-    console.log('Selecciono' + product.name_product);
-    this.selectProductOption(product);
+    if (!product.status_product) {
+      console.log('Selecciono' + product.name_product);
+      this.selectProductOption(product);
+    }
   }
 
   async selectProductOption(product: any) {
@@ -78,6 +81,48 @@ export class SalesSearchProductPage implements OnInit {
     });
     await modal.present();
   }
+
+  public getIdProduct(productPrice: any) {
+    console.log('llego ', productPrice);
+    this.modal.dismiss();
+    this.idPriceList.push(productPrice);
+    this.productList.forEach( product => {
+      if (product.id_product === productPrice.id_product) {
+        product.status_product = true;
+      }
+    });
+    this.validatePriceProductList();
+  }
+
+  public deleteIdPrice(productPrice: any) {
+    this.idPriceList.splice(productPrice, 1);
+    this.productList.forEach( product => {
+      if (product.id_product === productPrice.id_product) {
+        product.status_product = false;
+      }
+    });
+    this.validatePriceProductList();
+  }
+
+  public validatePriceProductList() {
+    if (this.idPriceList.length > 0) {
+      this.disabled = false;
+    } else {
+      this.disabled = true;
+    }
+  }
+
+  public sendProductPriceInfo() {
+    this.dataSaleService.setPriceProductInfo(this.idPriceList);
+    this.router.navigate(['/sale-confirm']);
+  }
+
+
+
+
+
+
+
 
 
 }
